@@ -1,0 +1,11 @@
+@font-face {
+    font-family: "F Book";
+    src: url("f_grotesk_book.eot");
+    src: url("f_grotesk_book.eot?#iefix") format("embedded-opentype"),
+         url("f_grotesk_book.woff2") format("woff2"),
+         url("f_grotesk_book.woff") format("woff"),
+         url("f_grotesk_book.ttf") format("ttf"),
+         url("f_grotesk_book.svg#FGrotesk-Regular") format("svg");
+    font-style: normal;
+    font-weight: regular;
+}

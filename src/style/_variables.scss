@@ -1,0 +1,20 @@
+/* Typography */
+$line-height: 34px;
+$font-size: 28px;
+$sans-serif-stack: 'F Demi', helvetica, arial, sans-serif;
+/* Color */
+$black: #000;
+$white: #fff;
+$theme: #c3c5d5;
+$theme-r: #d5c3c3;
+$theme-g: #c3d6c3;
+/* Space */
+$margin-sides: 60px;
+$margin-top: 20px;
+/* Breakpoints */
+$breakpoints: (
+  'small': (max-width: 900px),
+  'medium': (max-width: 1000px),
+  'large': (max-width: 1600px),
+  'short': (max-height: 700px)
+);

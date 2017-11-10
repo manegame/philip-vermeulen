@@ -1,0 +1,11 @@
+@font-face {
+    font-family: "F Bold";
+    src: url("f_grotesk_bold.eot");
+    src: url("f_grotesk_bold.eot?#iefix") format("embedded-opentype"),
+         url("f_grotesk_bold.woff2") format("woff2"),
+         url("f_grotesk_bold.woff") format("woff"),
+         url("f_grotesk_bold.ttf") format("ttf"),
+         url("f_grotesk_bold.svg#FGroteskBold-Regular") format("svg");
+    font-style: normal;
+    font-weight: 700;
+}
