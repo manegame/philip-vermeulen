@@ -5,7 +5,7 @@
         <router-link class="headbar__columns__column--l__link" to="/">Philip Vermeulen</router-link>
       </div>
       <div class="headbar__columns__column--m">
-          {{variables.title}}
+        <router-link :to="{ name: 'singleProject', params: {slug: variables.project.slug} }">{{variables.project.title}}</router-link>
         <!-- <ul class="headbar__columns__column__list" v-for="(project, index) in main.projects">
           <li>
             {{index + 1}}.
@@ -52,7 +52,6 @@ export default {
   width: 100%;
   padding: $margin-top $margin-sides;
   z-index: 1;
-  pointer-events: none;
 
   &__columns {
     display: inline-flex;

@@ -1,13 +1,12 @@
 <template>
-  <div class="overview" :style='{ backgroundColor: tweenedCSSColor }' @click='updateColor'>
-    <div class="overview__project" v-for="(project, index) in main.projects">
+  <!-- <div class="overview" :style='{ backgroundColor: tweenedCSSColor }' @click='updateColor'> -->
+  <div class="overview" :style='{ backgroundColor: variables.background }' >
+    <div class="overview__project" v-for="(project, index) in main.projects" @mouseover='SET_PROJECT({ slug: project.slugs[0], title: project.data.title[0].text })'>
       <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-if="isEven((index + 1))">
-        <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
         <img class="overview__project__image" :src="project.data.preview_image.url"/>
       </router-link>
       <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-else>
         <img class="overview__project__image" :src="project.data.preview_image.url"/>
-        <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
       </router-link>
     </div>
     <!-- <input v-model="colorQuery" v-on:keyup.enter="updateColor" placeholder="Enter a color" style='z-index:1000'>
@@ -33,7 +32,6 @@ export default {
     return {
       msg: 'overview',
       newColor: 'rgb(0,0,255)',
-      // colorQuery: '',
       color: {
         red: 0,
         green: 0,
@@ -65,11 +63,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['GET_POSTS', 'SET_BACKGROUND']),
+    ...mapActions(['GET_POSTS', 'SET_BACKGROUND', 'SET_PROJECT']),
+    debug () {
+      console.log('uhhh')
+    },
     isEven: (n) => {
       return n % 2 === 0
     },
-    updateColor: function () {
+    updateColor: () => {
       this.color = new Color(this.newColor).toRGB()
       console.log(this.color)
       this.newColor = ''
@@ -77,6 +78,7 @@ export default {
   },
   mounted() {
     this.GET_POSTS()
+    this.SET_BACKGROUND(this.variables.main)
   },
   watch: {
     $route(to, from) {},
@@ -117,17 +119,17 @@ export default {
     &:nth-child(even) {
       float: right;
       clear: right;
-      margin-top: $line-height;
+      margin-top: $line-height * 2;
     }
 
     &:nth-child(odd) {
       float: left;
       clear: left;
-      margin-top: $line-height;
+      margin-top: $line-height * 2;
     }
 
     &:nth-child(2) {
-      margin-top: $line-height;
+      margin-top: $line-height * 4;
     }
 
     &__image {

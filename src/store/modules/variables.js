@@ -3,31 +3,35 @@ import * as mutationTypes from '../mutationTypes'
 
 const state = {
   background: '',
-  overview: '#fff',
+  main: '#fff',
   single: '#000',
-  theme: '#c3c5d5',
-  title: 'Title'
-}
-
-const actions = {
-  [actionTypes.SET_BACKGROUND]({commit, state}) {
-    commit(mutationTypes.SET_BACKGROUND)
+  theme: '#f00',
+  project: {
+    title: '',
+    slug: ''
   }
-  // async [actionTypes.GET_POSTS]({commit, state}) {
-  //   commit(mutationTypes.SET_POSTS, await api.getPosts())
-  // }
 }
 
 const mutations = {
-  [mutationTypes.SET_BACKGROUND](state) {
-    state.title = this.msg
-    // if (this.$route.name === 'overview') {
-    //   state.background = state.theme
-    // }
+  [mutationTypes.SET_BACKGROUND](state, color) {
+    state.background = color
+  },
+  [mutationTypes.SET_PROJECT](state, payload) {
+    state.project.slug = payload.slug
+    state.project.title = payload.title
   }
-  // [mutationTypes.SET_SINGLE](state, post) {
-  //   state.single = post
-  // }
+}
+
+const actions = {
+  [actionTypes.SET_BACKGROUND]({commit, state}, color) {
+    commit(mutationTypes.SET_BACKGROUND, color)
+  },
+  [actionTypes.SET_PROJECT]({commit, state}, {title, slug}) {
+    commit(mutationTypes.SET_PROJECT, {
+      title: title,
+      slug: slug
+    })
+  }
 }
 
 export default {
