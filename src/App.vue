@@ -18,7 +18,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'main'
+      'main',
+      'variables'
     ])
   },
   head: {
@@ -62,6 +63,9 @@ export default {
   width: 100vw;
   height: 100vh;
   z-index: -1;
+  transition: background 1s ease-out;
+  -webkit-transition: background 1s ease-out;
+  -moz-transition: background 1s ease-out;
 }
 
 </style>

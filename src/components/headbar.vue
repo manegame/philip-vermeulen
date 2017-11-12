@@ -5,18 +5,22 @@
         <router-link class="headbar__columns__column--l__link" to="/">Philip Vermeulen</router-link>
       </div>
       <div class="headbar__columns__column--m">
-        <ul class="headbar__columns__column__list" v-for="(project, index) in main.projects">
+          {{variables.title}}
+        <!-- <ul class="headbar__columns__column__list" v-for="(project, index) in main.projects">
+          <li>
+            {{index + 1}}.
+          </li>
           <li class="headbar__columns__column__list__item" v-if="isEven((index + 1))">
             <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
-            <!-- <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }">show </router-link> -->
-            <!-- <span v-html='project.data.title[0].text'></span> -->
+            <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }">show </router-link>
+            <span v-html='project.data.title[0].text'></span>
           </li>
           <li v-else>
-            <!-- <span v-html='project.data.title[0].text'></span> -->
-            <!-- <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }">show </router-link> -->
+            <span v-html='project.data.title[0].text'></span>
+            <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }">show </router-link>
             <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
           </li>
-        </ul>
+        </ul> -->
       </div>
       <div class="headbar__columns__column--r">
         <router-link class="headbar__columns__column--r__link" :to="{name: 'about'}">About</router-link>
@@ -30,13 +34,10 @@ import {mapState, mapActions} from 'vuex'
 export default {
   name: 'headbar',
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main', 'variables'])
   },
   methods: {
-    ...mapActions(['GET_POSTS']),
-    isEven: (n) => {
-      return n % 2 === 0
-    }
+    ...mapActions(['GET_POSTS'])
   }
 }
 </script>
@@ -51,6 +52,7 @@ export default {
   width: 100%;
   padding: $margin-top $margin-sides;
   z-index: 1;
+  pointer-events: none;
 
   &__columns {
     display: inline-flex;
