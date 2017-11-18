@@ -1,30 +1,19 @@
 <template>
   <div class="headbar">
     <div class="headbar__columns">
+
       <div class="headbar__columns__column--l">
-        <router-link class="headbar__columns__column--l__link" to="/">Philip Vermeulen</router-link>
+        <router-link class="headbar__columns__column--l__link" to="/" @click='showTitle = true'>Philip Vermeulen</router-link>
       </div>
+
       <div class="headbar__columns__column--m">
-        <router-link :to="{ name: 'singleProject', params: {slug: variables.project.slug} }">{{variables.project.title}}</router-link>
-        <!-- <ul class="headbar__columns__column__list" v-for="(project, index) in main.projects">
-          <li>
-            {{index + 1}}.
-          </li>
-          <li class="headbar__columns__column__list__item" v-if="isEven((index + 1))">
-            <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
-            <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }">show </router-link>
-            <span v-html='project.data.title[0].text'></span>
-          </li>
-          <li v-else>
-            <span v-html='project.data.title[0].text'></span>
-            <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }">show </router-link>
-            <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
-          </li>
-        </ul> -->
+        <router-link v-if='showTitle' :to="{ name: 'singleProject', params: {slug: variables.project.slug} }">{{variables.project.title}}</router-link>
       </div>
+
       <div class="headbar__columns__column--r">
-        <router-link class="headbar__columns__column--r__link" :to="{name: 'about'}">About</router-link>
+        <router-link class="headbar__columns__column--r__link" :to="{name: 'about'}" @click='showTitle = false'>About</router-link>
       </div>
+
     </div>
   </div>
 </template>
@@ -33,11 +22,24 @@
 import {mapState, mapActions} from 'vuex'
 export default {
   name: 'headbar',
+  data () {
+    return {
+      showTitle: true
+    }
+  },
   computed: {
     ...mapState(['main', 'variables'])
   },
   methods: {
     ...mapActions(['GET_POSTS'])
+  },
+  watch: {
+    '$route' (to, from) {
+      console.log('we zijn nu hier', this.$route)
+      if (this.$route.name === 'overview') { this.showTitle = true }
+      if (this.$route.name === 'singleProject') { this.showTitle = false }
+      if (this.$route.name === 'about') { this.showTitle = false }
+    }
   }
 }
 </script>
@@ -52,6 +54,10 @@ export default {
   width: 100%;
   padding: $margin-top $margin-sides;
   z-index: 1;
+
+  @include screen-size('small') {
+    padding: $margin-top $line-height-s;
+  }
 
   &__columns {
     display: inline-flex;
@@ -90,6 +96,10 @@ export default {
 
       &--m {
         text-align: center;
+
+        @include screen-size('small') {
+          display: none;
+        }
       }
 
       &--r {

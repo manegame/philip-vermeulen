@@ -1,3 +1,11 @@
+* {
+  &::selection {
+    color: $theme;
+    background: transparent;
+    text-shadow: 0 0 2px $white;
+  }
+}
+
 a {
   color: $black;
   text-decoration: none;

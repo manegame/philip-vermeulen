@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- {{main}} -->
     <headbar></headbar>
     <router-view></router-view>
   </div>
@@ -15,6 +14,11 @@ export default {
   name: 'app',
   components: {
     overview, headbar
+  },
+  data () {
+    return {
+      showTitle: true
+    }
   },
   computed: {
     ...mapState([
@@ -66,6 +70,12 @@ export default {
   transition: background 1s ease-out;
   -webkit-transition: background 1s ease-out;
   -moz-transition: background 1s ease-out;
+  overflow-x: hidden;
+
+  @include screen-size('small') {
+    font-size: 22px;
+    line-height: 26px;
+  }
 }
 
 </style>

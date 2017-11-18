@@ -5,7 +5,8 @@ import * as mutationTypes from '../mutationTypes'
 const state = {
   projects: [],
   single: {},
-  about: []
+  about: [],
+  shop: []
 }
 
 const actions = {
@@ -21,6 +22,7 @@ const mutations = {
   [mutationTypes.SET_POSTS](state, data) {
     state.projects = data.filter(e => e.type === 'project')
     state.about = data.filter(e => e.type === 'about')
+    state.shop = data.filter(e => e.type === 'product')
   },
   [mutationTypes.SET_SINGLE](state, post) {
     state.single = post

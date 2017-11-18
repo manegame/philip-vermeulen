@@ -1,19 +1,15 @@
 <template>
-  <!-- <div class="overview" :style='{ backgroundColor: tweenedCSSColor }' @click='updateColor'> -->
   <div class="overview" :style='{ backgroundColor: variables.background }' >
     <div class="overview__project" v-for="(project, index) in main.projects" @mouseover='SET_PROJECT({ slug: project.slugs[0], title: project.data.title[0].text })'>
       <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-if="isEven((index + 1))">
         <img class="overview__project__image" :src="project.data.preview_image.url"/>
+        <router-link class="overview__project__link" :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
       </router-link>
       <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-else>
         <img class="overview__project__image" :src="project.data.preview_image.url"/>
+        <router-link class="overview__project__link" :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
       </router-link>
     </div>
-    <!-- <input v-model="colorQuery" v-on:keyup.enter="updateColor" placeholder="Enter a color" style='z-index:1000'>
-      <button v-on:click="updateColor">Update</button>
-      <p>Preview:</p>
-      <span v-bind:style="{ backgroundColor: tweenedCSSColor }"></span>
-      <p>{{ tweenedCSSColor }}</p> -->
   </div>
 </template>
 
@@ -109,6 +105,10 @@ export default {
   overflow-y: scroll;
   z-index: 0;
 
+  @include screen-size('small') {
+    padding: $margin-top $line-height-s;
+  }
+
   &__project {
     height: $line-height * 9;
     width: auto;
@@ -116,25 +116,54 @@ export default {
     clear: none;
     z-index: 1;
 
+    @include screen-size('small') {
+      height: $line-height-s * 9;
+      margin-top: $line-height-s;
+    }
+
     &:nth-child(even) {
       float: right;
       clear: right;
-      margin-top: $line-height * 2;
+      margin-top: $line-height * 3;
+      text-align: right;
+
+      @include screen-size('small') {
+        margin-top: $line-height-s * 3;
+      }
     }
 
     &:nth-child(odd) {
       float: left;
       clear: left;
-      margin-top: $line-height * 2;
+      margin-top: $line-height * 3;
+
+      @include screen-size('small') {
+        margin-top: $line-height-s * 3;
+      }
     }
 
     &:nth-child(2) {
-      margin-top: $line-height * 4;
+      margin-top: $line-height * 6;
+
+      @include screen-size('small') {
+        margin-top: $line-height-s * 3;
+      }
     }
 
     &__image {
       height: 100%;
       width: auto;
+    }
+
+    &__link {
+      font-size: $font-size-s;
+      line-height: $line-height-s;
+      width: auto;
+      display: none;
+
+      @include screen-size('small') {
+        display: block;
+      }
     }
   }
 }

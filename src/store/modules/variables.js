@@ -7,9 +7,10 @@ const state = {
   single: '#000',
   theme: '#f00',
   project: {
-    title: '',
+    title: 'Welcome',
     slug: ''
-  }
+  },
+  exhibitions_list: ['test', 'test2']
 }
 
 const mutations = {
