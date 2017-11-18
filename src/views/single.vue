@@ -24,9 +24,8 @@
         {{main.single.data.year[0].text}}
         {{main.single.data.materials[0].text}} -->
 
-
     <div class="single__media">
-      <img class="single__media__img" :src='main.single.data.preview_image.url'/>
+      <img class='single__media__image' :class='{active : collapse}' :src='main.single.data.preview_image.url' @click='collapse = !collapse'/>
     </div>
 
     <div class="single__desc">
@@ -95,6 +94,7 @@ export default {
   data() {
     return {
       msg: 'Single Project View',
+      collapse: false,
       content: {
         title: {
           rendered: ''
@@ -162,7 +162,7 @@ export default {
 
 .single {
   background: $black;
-  color: $theme;
+  color: $theme-r;
   font-size: $font-size-s;
   line-height: $line-height-s;
   padding: $line-height * 3 $margin-sides;
@@ -275,13 +275,19 @@ export default {
 
   &__media {
     width: 100%;
-    height: auto;
-    max-height: 70vh;
-    overflow: hidden;
-    object-fit: cover;
 
-    &__img {
+    &__image {
       width: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+      height: auto;
+      max-height: 70vh;
+
+      &.active {
+        max-height: 100vh;
+      }
+
+      transition: max-height 1s linear;
     }
   }
 }

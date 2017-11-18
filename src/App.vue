@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <headbar></headbar>
+    <headbar :showTitle='showTitle'></headbar>
     <router-view></router-view>
   </div>
 </template>
@@ -34,17 +34,24 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['GET_POSTS'])
+    ...mapActions(['GET_POSTS']),
+    hideTitle () {
+      if (this.$route.name === 'overview') { this.showTitle = true }
+      if (this.$route.name === 'singleProject') { this.showTitle = false }
+      if (this.$route.name === 'about') { this.showTitle = false }
+    }
   },
   mounted () {
     this.GET_POSTS()
-    // this.$router.beforeEach((to, from, next) => {
-    //   if (from.name === 'xxx') {}
-    //   next()
-    // })
+    this.hideTitle()
+  },
+  beforeRouteUpdate (to, from, next) {
+    console.log('to, from, next')
   },
   watch: {
-    '$route' (to, from) {}
+    '$route' (to, from) {
+      this.hideTitle()
+    }
   }
 }
 </script>

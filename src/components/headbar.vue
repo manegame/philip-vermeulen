@@ -3,7 +3,7 @@
     <div class="headbar__columns">
 
       <div class="headbar__columns__column--l">
-        <router-link class="headbar__columns__column--l__link" to="/" @click='showTitle = true'>Philip Vermeulen</router-link>
+        <router-link class="headbar__columns__column--l__link" to="/">Philip Vermeulen</router-link>
       </div>
 
       <div class="headbar__columns__column--m">
@@ -11,7 +11,7 @@
       </div>
 
       <div class="headbar__columns__column--r">
-        <router-link class="headbar__columns__column--r__link" :to="{name: 'about'}" @click='showTitle = false'>About</router-link>
+        <router-link class="headbar__columns__column--r__link" :to="{name: 'about'}">About</router-link>
       </div>
 
     </div>
@@ -22,9 +22,15 @@
 import {mapState, mapActions} from 'vuex'
 export default {
   name: 'headbar',
+  props: {
+    showTitle: {
+      type: Boolean,
+      required: true
+    }
+  },
   data () {
     return {
-      showTitle: true
+      show: this.showTitle
     }
   },
   computed: {
@@ -32,14 +38,6 @@ export default {
   },
   methods: {
     ...mapActions(['GET_POSTS'])
-  },
-  watch: {
-    '$route' (to, from) {
-      console.log('we zijn nu hier', this.$route)
-      if (this.$route.name === 'overview') { this.showTitle = true }
-      if (this.$route.name === 'singleProject') { this.showTitle = false }
-      if (this.$route.name === 'about') { this.showTitle = false }
-    }
   }
 }
 </script>
@@ -106,20 +104,20 @@ export default {
         text-align: right;
 
         &__link {
-          color: $theme;
+          color: $theme-r;
 
           &:visited,
           &:active {
-            color: $theme;
+            color: $theme-r;
           }
         }
 
         &__span {
-          color: $theme;
+          color: $theme-r;
 
           &:visited,
           &:active {
-            color: $theme;
+            color: $theme-r;
           }
         }
       }

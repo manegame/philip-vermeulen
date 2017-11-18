@@ -113,7 +113,7 @@ export default {
   padding: $margin-top * 9 $margin-sides;
   font-size: 20px;
   line-height: 24px;
-  background: $theme;
+  background: $theme-r;
   color: $black;
 
   &__text {

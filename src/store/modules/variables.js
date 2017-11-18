@@ -7,7 +7,7 @@ const state = {
   single: '#000',
   theme: '#f00',
   project: {
-    title: 'Welcome',
+    title: 'Philip Vermeulen',
     slug: ''
   },
   exhibitions_list: ['test', 'test2']
