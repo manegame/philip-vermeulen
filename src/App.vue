@@ -13,7 +13,8 @@ import headbar from './components/headbar'
 export default {
   name: 'app',
   components: {
-    overview, headbar
+    overview,
+    headbar
   },
   data () {
     return {

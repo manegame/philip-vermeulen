@@ -1,5 +1,6 @@
 <template>
   <div class="overview" :style='{ backgroundColor: variables.background }' >
+    <events></events>
     <div class="overview__project" v-for="(project, index) in main.projects" @mouseover='SET_PROJECT({ slug: project.slugs[0], title: project.data.title[0].text })'>
       <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-if="isEven((index + 1))">
         <img class="overview__project__image" :src="project.data.preview_image.url"/>
@@ -16,13 +17,15 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import headbar from '../components/headbar'
+import events from '../components/events'
 import TWEEN from 'tween.js'
 let Color = require('color-js')
 
 export default {
   name: 'overview',
   components: {
-    headbar
+    headbar,
+    events
   },
   data() {
     return {

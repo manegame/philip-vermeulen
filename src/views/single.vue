@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <div class="single__more">
+    <div class="single__more" v-if='main.single.data.images.length > 0 || main.single.data.vimeo_id != undefined'>
       <p class="single__more__text">
         more
       </p>
