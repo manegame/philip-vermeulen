@@ -286,6 +286,7 @@ export default {
     margin: 0 auto;
     padding-top: $line-height;
     padding-bottom: $line-height;
+    max-width: 100%;
 
     @include screen-size('small') {
       width: 400px;

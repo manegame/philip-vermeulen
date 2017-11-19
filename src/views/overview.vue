@@ -1,6 +1,8 @@
 <template>
   <div class="overview" :style='{ backgroundColor: variables.background }' >
-    <events></events>
+    <div class="overview__events">
+      <events v-if='showDates' @close='showDates = false'></events>
+    </div>
     <div class="overview__project" v-for="(project, index) in main.projects" @mouseover='SET_PROJECT({ slug: project.slugs[0], title: project.data.title[0].text })'>
       <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-if="isEven((index + 1))">
         <img class="overview__project__image" :src="project.data.preview_image.url"/>
@@ -30,6 +32,7 @@ export default {
   data() {
     return {
       msg: 'overview',
+      showDates: true,
       newColor: 'rgb(0,0,255)',
       color: {
         red: 0,
@@ -112,6 +115,10 @@ export default {
     padding: $margin-top $line-height-s;
   }
 
+  &__events {
+    padding-top: $line-height * 2;
+  }
+
   &__project {
     height: $line-height * 9;
     width: auto;
@@ -127,7 +134,7 @@ export default {
     &:nth-child(even) {
       float: right;
       clear: right;
-      margin-top: $line-height * 3;
+      margin-top: $line-height * 8;
       text-align: right;
 
       @include screen-size('small') {
