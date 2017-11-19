@@ -67,10 +67,17 @@
       </div>
     </div>
 
-    <div class="single__more" v-if='main.single.data.images.length > 0 || main.single.data.vimeo_id != undefined'>
+    <!-- <div class="single__more" v-if='main.single.data.images.length > 0 || main.single.data.vimeo_id != undefined'>
       <p class="single__more__text">
         more
       </p>
+    </div> -->
+
+    <div v-if='main.single.data.vimeo_id != undefined' class="single__video">
+      <div class='single__video__container'>
+        <iframe :src="'https://player.vimeo.com/video/' + main.single.data.vimeo_id + '?title=0&byline=0&portrait=0'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <!-- <figcaption v-html='section.video_caption'></figcaption> -->
+      </div>
     </div>
 
     <imageSection v-if='main.single.data.images.length > 0' :images='main.single.data.images'/>
@@ -270,6 +277,34 @@ export default {
 
     &__text {
       color: $white;
+    }
+  }
+
+  &__video {
+    width: 800px;
+    height: auto;
+    margin: 0 auto;
+    padding-top: $line-height;
+    padding-bottom: $line-height;
+
+    @include screen-size('small') {
+      width: 400px;
+    }
+
+    &__container {
+      position: relative;
+      padding-bottom: 56.25%;
+      margin: 0 auto;
+
+      iframe,
+      object,
+      embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
