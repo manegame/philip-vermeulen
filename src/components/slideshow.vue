@@ -36,7 +36,7 @@ export default {
   height: 100vh;
   top: 0;
   left: 0;
-  background: $theme-r;
+  background: $black;
   z-index: 100;
   color: $white;
   display: flex;
