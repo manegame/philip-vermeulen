@@ -51,7 +51,7 @@ export default {
   position: fixed;
   width: 100%;
   padding: $margin-top $margin-sides;
-  z-index: 1;
+  z-index: 0;
 
   @include screen-size('small') {
     padding: $margin-top $line-height-s;

@@ -1,10 +1,9 @@
 <template>
   <div class="about">
+    <p class="about__shop" @click='showShop = true'>Shop</p>
+    <shop v-if='showShop' @close='showShop = false'/>
+
     <div class="about__text">
-
-      <p class="about__text__shop" @click='showShop = true'>Shop</p>
-      <shop v-if='showShop' @close='showShop = false'/>
-
       <p class="about__text__intro">{{main.about[0].data.text[0].text}}</p>
 
       <p>
@@ -27,35 +26,32 @@
       <!-- Education -->
       <!-- Other -->
 
-      <p>
-        Upcoming Exhibitions:
-      </p>
-
+      <events :close='false' />
 
       <span>Past Exhibitions: </span>
       <ul class="about__text__list" v-for='item in main.about[0].data.past_exhibitions'>
         <li v-html='item.year[0].text'></li>
-        <li v-for='entry in item.list' v-html='entry.text'></li>
+        <li class="about__text__list__item" v-for='entry in item.list' v-html='entry.text'></li>
       </ul>
 
       <span>Residencies: </span>
       <ul class="about__text__list">
-        <li v-for='item in main.about[0].data.residencies' v-html='item.text'></li>
+        <li class="about__text__list__item" v-for='item in main.about[0].data.residencies' v-html='item.text'></li>
       </ul>
 
       <span>Internships: </span>
       <ul class="about__text__list">
-        <li v-for='item in main.about[0].data.internships' v-html='item.text'></li>
+        <li class="about__text__list__item" v-for='item in main.about[0].data.internships' v-html='item.text'></li>
       </ul>
 
       <span>Education: </span>
       <ul class="about__text__list">
-        <li v-for='item in main.about[0].data.education' v-html='item.text'></li>
+        <li class="about__text__list__item" v-for='item in main.about[0].data.education' v-html='item.text'></li>
       </ul>
 
       <span>Other: </span>
       <ul class="about__text__list">
-        <li v-for='item in main.about[0].data.other' v-html='item.text'></li>
+        <li class="about__text__list__item" v-for='item in main.about[0].data.other' v-html='item.text'></li>
       </ul>
 
     </div>
@@ -66,11 +62,13 @@
 import {mapState, mapActions} from 'vuex'
 import PrismicDOM from 'prismic-dom'
 import shop from '../components/shop'
+import events from '../components/events'
 
 export default {
   name: 'about',
   components: {
-    shop
+    shop,
+    events
   },
   data () {
     return {
@@ -109,31 +107,52 @@ export default {
   height: 100%;
   position: absolute;
   overflow-y: scroll;
-  z-index: 0;
   padding: $margin-top * 9 $margin-sides;
   font-size: 20px;
   line-height: 24px;
   background: $theme-r;
   color: $black;
+  z-index: -1;
+
+  &__shop {
+    position: fixed;
+    font-size: $font-size;
+    line-height: $line-height;
+    bottom: 0;
+    right: 0;
+    width: 33%;
+    padding-top: $line-height;
+    padding-right: $margin-sides;
+    padding-bottom: $line-height;
+    text-align: right;
+    color: $white;
+  }
 
   &__text {
+    &__intro {
+      max-width: 80ch;
+    }
+
     &__intro,
-    &__contact,
-    &__shop {
+    &__contact {
       padding-bottom: $line-height;
     }
 
-    &__shop {
-      cursor: pointer;
-      color: $white;
-    }
-
     &__list {
+      max-width: 60ch;
       margin-bottom: $line-height;
+
+      &__item {
+        padding-left: $line-height;
+      }
     }
 
     &__contact {
       display: block;
+
+      * {
+        color: $white;
+      }
     }
   }
 

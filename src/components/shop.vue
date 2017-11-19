@@ -1,21 +1,31 @@
 <template>
-  <div class="shop" @click='$emit("close")'>
-    <div class="shop__item">
-      <img class="shop__item__image" :src='main.shop[0].data.product_image.url'/>
-      <p class="shop__item__meta">
-        <p v-html='main.shop[0].data.product_name[0].text'/>
-        <p v-html='main.shop[0].data.price[0].text'/>
-        <p>BUY</p>
-      </p>
+  <div class="shop" @click.self='$emit("close")'>
+    <div class="shop__item" v-for='item in main.shop'>
+      <img class="shop__item__image" :src='item.data.product_image.url'/>
+      <div class="shop__item__meta">
+        <span class="shop__item__meta__title" v-html='item.data.product_name[0].text'/>
+        <span class="shop__item__meta__price" v-html='item.data.price[0].text'/>
+        <form class="shop__item__meta__paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="hosted_button_id" value="WZW6TN7HA7A28">
+          <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
+          <img class="shop__item__meta__paypal__button" alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
+        </form>
+        <span class="shop__item__meta__description" v-html='item.data.product_description[0].text'/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import {mapState, mapActions} from 'vuex'
+import slideshow from './slideshow'
 
 export default {
   name: 'shop',
+  components: {
+    slideshow
+  },
   computed: {
     ...mapState(['main'])
   },
@@ -34,27 +44,79 @@ export default {
 @import '../style/_variables.scss';
 
 .shop {
+  font-size: $font-size;
+  line-height: $line-height;
   position: fixed;
   width: 100vw;
   height: 100vh;
+  overflow-y: scroll;
   top: 0;
   left: 0;
   background: $black;
-  z-index: 100;
+  z-index: 1000;
   color: $white;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  padding: $line-height * 2 $margin-sides;
   cursor: pointer;
 
+  @include hide-scroll;
+
   &__item {
-    padding: 0 $margin-sides;
+    height: $line-height * 9;
+    margin-top: $line-height;
+    margin-bottom: $line-height;
+    display: flex;
+    align-items: flex-end;
+    text-align: left;
+
+    &:nth-child(even) {
+      float: right;
+      clear: right;
+      flex-direction: row-reverse;
+
+      img {
+        padding-right: 0;
+        padding-left: $line-height;
+      }
+
+      * {
+        text-align: right;
+      }
+    }
+
+    &:nth-child(odd) {
+      float: left;
+      clear: left;
+    }
+
+    &__meta {
+      color: $white;
+
+      &__title,
+      &__price {
+        display: block;
+      }
+
+      &__description {
+        font-size: $font-size-s;
+        line-height: $line-height-s;
+      }
+
+      &__paypal {
+        text-align: left;
+
+        img {
+          width: 1px;
+          display: block;
+        }
+      }
+    }
 
     &__image {
       object-fit: contain;
-      width: 100%;
-      height: auto;
-      max-height: 90%;
+      width: auto;
+      height: 100%;
+      padding-right: $line-height;
+      padding-left: 0;
     }
   }
 }

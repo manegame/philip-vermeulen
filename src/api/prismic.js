@@ -19,5 +19,26 @@ export default {
           }
         )
     })
+  },
+  getEvents() {
+    return new Promise((resolve, reject) => {
+      Prismic.getApi(apiEndpoint)
+        .then(api => {
+          console.log('checking Prismic for events')
+          return api.query(
+            Prismic.Predicates.at('document.type', 'project')
+          )
+        })
+        .then(
+          response => {
+            resolve(response.results)
+          },
+          err => {
+            console.log('Something went wrong: ', err)
+            reject()
+          }
+        )
+    })
   }
+
 }

@@ -3,6 +3,10 @@
 
     <!-- ORDER -->
 
+    <!-- TOP -->
+
+      <!-- Preview Image -->
+
     <!-- LEFT -->
 
       <!-- Title -->
@@ -18,11 +22,9 @@
       <!-- Description -->
 
     <!-- BOTTOM -->
-      <!-- Images -->
 
-      <!-- {{main.single.data.title[0].text}}
-        {{main.single.data.year[0].text}}
-        {{main.single.data.materials[0].text}} -->
+      <!-- Video -->
+      <!-- Images -->
 
     <div class="single__media">
       <img class='single__media__image' :class='{active : collapse}' :src='main.single.data.preview_image.url' @click='collapse = !collapse'/>
@@ -39,13 +41,13 @@
           <li class="single__desc--l__material__item" v-for="material in main.single.data.materials" v-html="material.text"></li>
         </ul><br/>
 
-        <div class="single__desc--l__events" v-if='main.single.data.events[0].event.length > 0'>
+        <div class="single__desc--l__events" v-if='main.single.data.events[0].name.length > 0'>
           <p>Events</p>
 
           <ul class="single__desc--l__events__upcoming">
             <li class="single__desc--l__events__upcoming__item" v-for='a in main.single.data.events'>
               <span v-if='!isPast(a.from)'>
-                {{a.event[0].text}}:
+                {{a.name[0].text}}:
                 {{a.to | dayMonthYear}}
               </span>
             </li>
@@ -54,7 +56,7 @@
           <ul class="single__desc--l__events__past">
             <li class="single__desc--l__events__past__item" v-for='a in main.single.data.events'>
               <span v-if='isPast(a.from)'>
-                {{a.event[0].text}}:
+                {{a.name[0].text}}:
                 {{a.to | monthYear}}
               </span>
             </li>

@@ -8,21 +8,21 @@
         <!-- Title from here -->
         <span class="events__list__item__s1" v-for='e in item.data.events'>
         <!-- dates from here -->
-          <span class="events__list__item__s1__s2" v-for='a in e.event'>
+          <span class="events__list__item__s1__s2" v-for='a in e.name'>
             <!-- event title from here -->
             <span class="events__list__item__s1__s2__s3" v-if='isUp(e.to)'>
               <router-link class="events__list__item__s1__s2__s3__link" :to="{ name: 'singleProject', params: {slug: item.slugs[0]} }">
                 <span class="events__list__item__s1__s2__s3__link__project">{{item.data.title[0].text}}</span> @
                 {{a.text}} from
                 {{e.from | dayMonthYear}} until
-                {{e.to | | dayMonthYear}}<br />
+                {{e.to | dayMonthYear}}<br />
               </router-link>
             </span>
           </span>
         </span>
       </li>
     </ul>
-    <span class="events__close" @click='$emit("close")'>close</span>
+    <span v-if='close' class="events__close" @click='$emit("close")'>close</span>
   </div>
 </template>
 
@@ -32,6 +32,12 @@ import moment from 'moment'
 
 export default {
   name: 'events',
+  props: {
+    close: {
+      type: Boolean,
+      required: true
+    }
+  },
   computed: {
     ...mapState(['main'])
   },

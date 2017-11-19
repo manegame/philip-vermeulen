@@ -1,7 +1,7 @@
 <template>
-  <div class="overview" :style='{ backgroundColor: variables.background }' >
+  <div class="overview" :style='{ backgroundColor: variables.background }'>
     <div class="overview__events">
-      <events v-if='showDates' @close='showDates = false'></events>
+      <events v-if='variables.showDates' :close='true' @close='this.SHOW_DATES'></events>
     </div>
     <div class="overview__project" v-for="(project, index) in main.projects" @mouseover='SET_PROJECT({ slug: project.slugs[0], title: project.data.title[0].text })'>
       <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-if="isEven((index + 1))">
@@ -13,6 +13,11 @@
         <router-link class="overview__project__link" :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
       </router-link>
     </div>
+
+    <div class="overview__shop">
+      <p @click='showShop = true'>Shop</p>
+      <shop v-if='showShop' @close='showShop = false'/>
+    </div>
   </div>
 </template>
 
@@ -20,42 +25,23 @@
 import {mapState, mapActions} from 'vuex'
 import headbar from '../components/headbar'
 import events from '../components/events'
-import TWEEN from 'tween.js'
-let Color = require('color-js')
+import shop from '../components/shop'
 
 export default {
   name: 'overview',
   components: {
     headbar,
-    events
+    events,
+    shop
   },
   data() {
     return {
       msg: 'overview',
-      showDates: true,
-      newColor: 'rgb(0,0,255)',
-      color: {
-        red: 0,
-        green: 0,
-        blue: 0,
-        alpha: 1
-      },
-      tweenedColor: {}
+      showShop: false
     }
-  },
-  created: function () {
-    this.tweenedColor = Object.assign({}, this.color)
   },
   computed: {
-    ...mapState(['main', 'variables']),
-    tweenedCSSColor: function () {
-      return new Color({
-        red: this.tweenedColor.red,
-        green: this.tweenedColor.green,
-        blue: this.tweenedColor.blue,
-        alpha: this.tweenedColor.alpha
-      }).toCSS()
-    }
+    ...mapState(['main', 'variables'])
   },
   head: {
     title() {
@@ -65,36 +51,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['GET_POSTS', 'SET_BACKGROUND', 'SET_PROJECT']),
-    debug () {
-      console.log('uhhh')
-    },
+    ...mapActions(['GET_POSTS', 'SHOW_DATES', 'SET_PROJECT']),
     isEven: (n) => {
       return n % 2 === 0
-    },
-    updateColor: () => {
-      this.color = new Color(this.newColor).toRGB()
-      console.log(this.color)
-      this.newColor = ''
     }
   },
   mounted() {
     this.GET_POSTS()
-    this.SET_BACKGROUND(this.variables.main)
+    console.log(this.SHOW_DATES)
   },
   watch: {
-    $route(to, from) {},
-    color: function () {
-      function animate () {
-        if (TWEEN.update()) {
-          window.requestAnimationFrame(animate)
-        }
-      }
-      new TWEEN.Tween(this.tweenedColor)
-        .to(this.color, 750)
-        .start()
-      animate()
-    }
+    $route(to, from) {}
   }
 }
 </script>
@@ -113,6 +80,16 @@ export default {
 
   @include screen-size('small') {
     padding: $margin-top $line-height-s;
+  }
+
+  &__shop {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-top: $line-height;
+    padding-bottom: $line-height;
+    text-align: center;
   }
 
   &__events {
