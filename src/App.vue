@@ -81,6 +81,8 @@ export default {
   -moz-transition: background 1s ease-out;
   overflow-x: hidden;
 
+  @include hide-scroll;
+
   @include screen-size('small') {
     font-size: 22px;
     line-height: 26px;

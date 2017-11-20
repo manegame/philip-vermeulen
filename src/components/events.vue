@@ -1,5 +1,5 @@
 <template>
-  <div class="events">
+  <div class="events" :class="{ popup: close }">
     <p class="events__head">
       Upcoming Dates
     </p>
@@ -22,7 +22,7 @@
         </span>
       </li>
     </ul>
-    <span v-if='close' class="events__close" @click='$emit("close")'>close</span>
+    <span v-if='close' class="events__close" @click='$emit("close")'>×</span>
   </div>
 </template>
 
@@ -46,9 +46,14 @@ export default {
     isUp (value) {
       // expects the to value of a event
       let date = moment(value)
+      let tba = moment('11-28-1986')
       let now = moment()
+      console.log('tba ' + date.toString(), tba.toString(), now.toString())
       if (date > now) {
         return date
+      } else if (date === tba) {
+        console.log('it worked!!!')
+        return 'tba'
       }
     }
   },
@@ -64,13 +69,27 @@ export default {
 @import '../style/_variables.scss';
 
 .events {
-  background: $theme-r;
+  width: 100%;
   text-align: center;
-  color: $white;
   padding-bottom: $line-height-s / 2;
+  padding-left: $line-height;
+  padding-right: $line-height;
+  margin-bottom: $line-height;
+  background: $white;
+  color: $black;
+
+  &.popup {
+    background: $theme-r;
+    color: $white;
+
+    .events__head {
+      color: black !important;
+    }
+  }
 
   &__close {
     cursor: pointer;
+    color: $black;
   }
 
   &__head {
@@ -89,7 +108,7 @@ export default {
         &__s2 {
           &__s3 {
             &__link {
-              color: $white !important;
+              color: $black !important;
 
               &__project {
                 color: $black;

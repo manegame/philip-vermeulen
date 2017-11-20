@@ -76,7 +76,9 @@ export default {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  z-index: 0;
+  z-index: 100;
+
+  @include hide-scroll;
 
   @include screen-size('small') {
     padding: $margin-top $line-height-s;
@@ -93,6 +95,10 @@ export default {
   }
 
   &__events {
+    width: 100%;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
     padding-top: $line-height * 2;
   }
 
@@ -145,8 +151,15 @@ export default {
     &__link {
       font-size: $font-size-s;
       line-height: $line-height-s;
+      color: $black;
       width: auto;
       display: none;
+
+      &:visited,
+      &:active,
+      &:hover {
+        color: $black;
+      }
 
       @include screen-size('small') {
         display: block;

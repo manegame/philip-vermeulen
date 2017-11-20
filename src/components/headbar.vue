@@ -7,7 +7,7 @@
       </div>
 
       <div class="headbar__columns__column--m">
-        <router-link v-if='showTitle' :to="{ name: 'singleProject', params: {slug: variables.project.slug} }">{{variables.project.title}}</router-link>
+        <router-link class="headbar__columns__column--m__link" v-if='showTitle' :to="{ name: 'singleProject', params: {slug: variables.project.slug} }">{{variables.project.title}}</router-link>
       </div>
 
       <div class="headbar__columns__column--r">
@@ -97,6 +97,15 @@ export default {
 
         @include screen-size('small') {
           display: none;
+        }
+
+        &__link {
+          color: $black;
+
+          &:visited,
+          &:active {
+            color: $black;
+          }
         }
       }
 

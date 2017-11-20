@@ -175,9 +175,10 @@ export default {
   font-size: $font-size-s;
   line-height: $line-height-s;
   padding: $line-height * 3 $margin-sides;
-  z-index: 0;
   width: 100%;
   min-height: 100%;
+
+  @include hide-scroll;
 
   @include screen-size('small') {
     padding: $line-height-s * 3 $line-height-s;
@@ -200,9 +201,7 @@ export default {
       flex-grow: 1;
       font-size: $font-size-xs;
       line-height: $line-height-xs;
-      padding-left: 10px;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      color: $white;
 
       @include screen-size('small') {
         flex-basis: 100%;
@@ -225,7 +224,7 @@ export default {
       }
 
       &__events {
-        background-color: rgb(19, 19, 19);
+        color: $theme-r;
         margin-left: -10px;
         padding-left: 10px;
         padding-top: 10px;
@@ -260,10 +259,21 @@ export default {
     &--r {
       flex-basis: 67%;
       flex-grow: 2;
-      padding: 10px;
+      padding-left: 10px;
 
       &__text {
         padding-left: 20px;
+        max-width: 80ch;
+
+        a {
+          color: red !important;
+        }
+
+        p {
+          &::after {
+            content: 'a';
+          }
+        }
 
         @include screen-size('small') {
           padding-left: 0;
@@ -319,13 +329,13 @@ export default {
       object-fit: cover;
       object-position: 50% 50%;
       height: auto;
-      max-height: 70vh;
+      max-height: 85vh;
 
       &.active {
-        max-height: 100vh;
+        max-height: 70vh;
       }
 
-      transition: max-height 1s linear;
+      transition: max-height 0.03s linear;
     }
   }
 }

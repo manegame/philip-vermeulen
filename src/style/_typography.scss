@@ -1,3 +1,11 @@
+p {
+  min-height: $line-height;
+
+  @include screen-size('small') {
+    min-height: $line-height-s;
+  }
+}
+
 * {
   &::selection {
     color: $theme-r;
@@ -6,19 +14,19 @@
   }
 }
 
-a {
-  color: $black;
+ a {
+  color: $white;
   text-decoration: none;
 
   &:visited {
-    color: $black;
+    color: $white;
   }
 
   &:hover {
-    color: $black;
+    color: $white;
   }
 
   &:active {
-    color: $black;
+    color: $white;
   }
 }

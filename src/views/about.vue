@@ -28,28 +28,28 @@
 
       <events :close='false' />
 
-      <span>Past Exhibitions: </span>
+      <p>Past Exhibitions: </p>
       <ul class="about__text__list" v-for='item in main.about[0].data.past_exhibitions'>
-        <li v-html='item.year[0].text'></li>
+        <p v-html='item.year[0].text'></p>
         <li class="about__text__list__item" v-for='entry in item.list' v-html='entry.text'></li>
       </ul>
 
-      <span>Residencies: </span>
+      <p>Residencies: </p>
       <ul class="about__text__list">
         <li class="about__text__list__item" v-for='item in main.about[0].data.residencies' v-html='item.text'></li>
       </ul>
 
-      <span>Internships: </span>
+      <p>Internships: </p>
       <ul class="about__text__list">
         <li class="about__text__list__item" v-for='item in main.about[0].data.internships' v-html='item.text'></li>
       </ul>
 
-      <span>Education: </span>
+      <p>Education: </p>
       <ul class="about__text__list">
         <li class="about__text__list__item" v-for='item in main.about[0].data.education' v-html='item.text'></li>
       </ul>
 
-      <span>Other: </span>
+      <p>Other: </p>
       <ul class="about__text__list">
         <li class="about__text__list__item" v-for='item in main.about[0].data.other' v-html='item.text'></li>
       </ul>
@@ -105,7 +105,6 @@ export default {
 .about {
   width: 100%;
   height: 100%;
-  position: absolute;
   overflow-y: scroll;
   padding: $margin-top * 9 $margin-sides;
   font-size: 20px;
@@ -113,6 +112,8 @@ export default {
   background: $theme-r;
   color: $black;
   z-index: -1;
+
+  @include hide-scroll;
 
   &__shop {
     position: fixed;
