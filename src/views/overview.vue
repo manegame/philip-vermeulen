@@ -103,7 +103,7 @@ export default {
   }
 
   &__project {
-    height: $line-height * 9;
+    height: $line-height * 12;
     width: auto;
     margin-top: $line-height;
     clear: none;
@@ -129,6 +129,14 @@ export default {
       float: left;
       clear: left;
       margin-top: $line-height * 3;
+
+      @include screen-size('small') {
+        margin-top: $line-height-s * 3;
+      }
+    }
+
+    &:last-child {
+      margin-bottom: $line-height * 10;
 
       @include screen-size('small') {
         margin-top: $line-height-s * 3;
