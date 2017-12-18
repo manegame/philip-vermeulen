@@ -15,26 +15,11 @@
           <li class="single__desc--l__material__item" v-for="material in main.single.data.materials" v-html="material.text"></li>
         </ul><br/>
 
-        <div class="single__desc--l__events" v-if='main.single.data.events[0].name.length > 0'>
+        <div class="single__desc--l__events" v-if='main.single.data.events.length > 0'>
           <p>Events</p>
 
-          <ul class="single__desc--l__events__upcoming">
-            <li class="single__desc--l__events__upcoming__item" v-for='a in main.single.data.events'>
-              <span v-if='!isPast(a.from)'>
-                {{a.name[0].text}}:
-                {{a.to | dayMonthYear}}
-              </span>
-            </li>
-          </ul>
+          <events :all='true'/>
 
-          <ul class="single__desc--l__events__past">
-            <li class="single__desc--l__events__past__item" v-for='a in main.single.data.events'>
-              <span v-if='isPast(a.from) && a.name[0].text'>
-                {{a.name[0].text}}:
-                {{a.to | monthYear}}
-              </span>
-            </li>
-          </ul>
         </div>
       </div>
 
@@ -59,12 +44,14 @@
 import {mapState, mapActions} from 'vuex'
 import PrismicDOM from 'prismic-dom'
 import imageSection from '../components/image-section'
+import events from '../components/events'
 
 export default {
   name: 'single',
   props: ['slug'],
   components: {
-    imageSection
+    imageSection,
+    events
   },
   data() {
     return {

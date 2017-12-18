@@ -6,22 +6,52 @@
       Upcoming Dates
     </p>
 
-    <ul class="events__list" v-for='item in main.events'>
-      <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "future"'>
-        <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
-          <span v-html='item.project'></span> @ <span v-html='event.name[0].text'></span> from <span v-html='event.from'></span> to <span v-html='event.to'></span>
-        </router-link>
-      </li>
-    </ul>
+    <template v-if='all'>
+      Upcoming and past DATES
+      <!-- <ul class="events__list" v-for='item in main.events'>
+        Upcoming
+        <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "future"'>
+          <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
+            <span v-html='item.project'></span> @ <span v-html='event.name[0].text'></span> from <span v-html='event.from'></span> to <span v-html='event.to'></span>
+          </router-link>
+        </li>
+      </ul>
 
-    <ul class="events__list" v-for='item in main.events'>
-      <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "tba"'>
-        <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
-          <span v-html='item.project'></span> @ <span v-html='event.name[0].text + "."'></span> Dates TBA
-        </router-link>
-      </li>
-    </ul>
+      <ul class="events__list" v-for='item in main.events'>
+        <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "tba"'>
+          <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
+            <span v-html='item.project'></span> @ <span v-html='event.name[0].text + "."'></span> Dates TBA
+          </router-link>
+        </li>
+      </ul>
 
+      <ul class="events__list" v-for='item in main.events'>
+        Past
+        <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "past"'>
+          <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
+            <span v-html='item.project'></span> @ <span v-html='event.name[0].text + "."'></span> Dates TBA
+          </router-link>
+        </li>
+      </ul> -->
+    </template>
+
+    <template v-else>
+      <ul class="events__list" v-for='item in main.events'>
+        <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "future"'>
+          <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
+            <span v-html='item.project'></span> @ <span v-html='event.name[0].text'></span> from <span v-html='event.from'></span> to <span v-html='event.to'></span>
+          </router-link>
+        </li>
+      </ul>
+
+      <ul class="events__list" v-for='item in main.events'>
+        <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "tba"'>
+          <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
+            <span v-html='item.project'></span> @ <span v-html='event.name[0].text + "."'></span> Dates TBA
+          </router-link>
+        </li>
+      </ul>
+    </template>
   </div>
 </template>
 
@@ -34,7 +64,11 @@ export default {
   props: {
     close: {
       type: Boolean,
-      required: true
+      required: false
+    },
+    all: {
+      type: Boolean,
+      required: false
     }
   },
   computed: {
