@@ -20,11 +20,11 @@ export default {
         )
     })
   },
-  getEvents() {
+  getProjects() {
     return new Promise((resolve, reject) => {
       Prismic.getApi(apiEndpoint)
         .then(api => {
-          console.log('checking Prismic for events')
+          console.log('checking Prismic for projects')
           return api.query(
             Prismic.Predicates.at('document.type', 'project')
           )

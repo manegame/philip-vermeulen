@@ -6,16 +6,27 @@ import single from './views/single'
 import about from './views/about'
 import App from './App'
 import store from './store'
-import moment from 'moment'
+// import moment from 'moment'
+import {parse, format} from 'date-fns'
 
 Vue.use(VueRouter)
 
+Vue.filter('dashed', function(value) {
+  if (value) {
+    return format(parse(value), 'DD.MM.YYYY')
+  }
+})
+
 Vue.filter('monthYear', (value) => {
-  return moment(String(value)).format('MMMM YYYY')
+  if (value) {
+    return format(parse(value), 'MMMM YYYY')
+  }
 })
 
 Vue.filter('dayMonthYear', (value) => {
-  return moment(String(value)).format('DD MMMM YYYY')
+  if (value) {
+    return format(parse(value), 'DD MMMM YYYY')
+  }
 })
 
 const router = new VueRouter({

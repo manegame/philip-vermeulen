@@ -1,38 +1,33 @@
 <template>
   <div class="events" :class="{ popup: close }">
     <span v-if='close' class="events__close" @click='$emit("close")'>×</span>
+
     <p class="events__head">
       Upcoming Dates
     </p>
-    <ul class="events__list">
-      <li class="events__list__item" v-for='item in main.projects'>
-        <!-- Title from here -->
-        <span class="events__list__item__s1" v-for='e in item.data.events'>
-        <!-- dates from here -->
-          <span class="events__list__item__s1__s2" v-for='a in e.name'>
-            <!-- event title from here -->
-            <span class="events__list__item__s1__s2__s3">
 
-              <router-link class="events__list__item__s1__s2__s3__link" :to="{ name: 'singleProject', params: {slug: item.slugs[0]} }" v-if='isUp(e.to)'>
-                <span class="events__list__item__s1__s2__s3__link__project">{{item.data.title[0].text}}@ {{a.text}}</span><br/>
-                from {{e.from | dayMonthYear}} until {{e.to | dayMonthYear}}<br />
-              </router-link>
-
-              <router-link class="events__list__item__s1__s2__s3__link" :to="{ name: 'singleProject', params: {slug: item.slugs[0]} }" v-else-if='isTba(e.to)'>
-                <span class="events__list__item__s1__s2__s3__link__project">{{item.data.title[0].text}} @ {{a.text}}<br/></span>
-                Dates TBA
-              </router-link>
-            </span>
-          </span>
-        </span>
+    <ul class="events__list" v-for='item in main.events'>
+      <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "future"'>
+        <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
+          <span v-html='item.project'></span> @ <span v-html='event.name[0].text'></span> from <span v-html='event.from'></span> to <span v-html='event.to'></span>
+        </router-link>
       </li>
     </ul>
+
+    <ul class="events__list" v-for='item in main.events'>
+      <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "tba"'>
+        <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
+          <span v-html='item.project'></span> @ <span v-html='event.name[0].text + "."'></span> Dates TBA
+        </router-link>
+      </li>
+    </ul>
+
   </div>
 </template>
 
 <script>
 import {mapState, mapActions} from 'vuex'
-import moment from 'moment'
+import {isFuture, isPast, isEqual, parse} from 'date-fns'
 
 export default {
   name: 'events',
@@ -47,32 +42,16 @@ export default {
   },
   methods: {
     ...mapActions(['GET_POSTS']),
-    isUp (value) {
-      // expects the to value of a event
-      let date = moment(value)
-      let tba = moment('11-28-1986')
-      let now = moment()
-      if (date.diff(now, 'days') > 0) return true
-      else return false
-    },
-    isTba (value) {
-      let date = moment(value)
-      let tba = moment('11-28-1986')
-      if (date.diff(tba, 'days') === 0) {
-        return true
-      }
-    },
-    getDate (value) {
-      let date = moment(value)
-      if (this.isUp(value)) {
-        return date
-      }
+    checkDate (date) {
+      let tba = new Date(1986, 10, 28)
+      console.log(parse(tba), parse(date))
+      if (isEqual(parse(tba), parse(date))) return 'tba'
+      else if (isPast(parse(date))) return 'past'
+      else if (isFuture(parse(date))) return 'future'
     }
   },
   mounted () {
     this.GET_POSTS()
-    console.log('check', this.isUp('09-11-2017'))
-    console.log('check', this.isUp('11-28-2017'))
   }
 }
 </script>
@@ -84,18 +63,18 @@ export default {
 
 .events {
   width: auto;
-  text-align: center;
-  padding: $line-height-s / 2 $line-height $line-height-s / 2 $line-height;
-  margin-bottom: 0;
-  background: $white;
-  color: $black;
+  margin-bottom: $line-height-s;
 
   &.popup {
+    text-align: center;
+    padding: $line-height-s / 2 $line-height * 1.5 $line-height-s / 2;
     background: $theme-r;
     color: $white;
     width: 80%;
-    float: right;
+    float: left;
     position: relative;
+    font-size: $font-size-s;
+    line-height: $line-height-s;
 
     .events__head {
       color: black !important;
@@ -111,6 +90,10 @@ export default {
       cursor: pointer;
       color: $black;
     }
+
+    .events__list__item {
+      padding-left: 0;
+    }
   }
 
   &__head {
@@ -118,23 +101,9 @@ export default {
   }
 
   &__list {
-    font-size: $font-size-s;
-    line-height: $line-height-s;
-
     &__item {
-      &__s1 {
-        &__s2 {
-          &__s3 {
-            &__link {
-              color: $white !important;
-
-              &__project {
-                color: $black;
-              }
-            }
-          }
-        }
-      }
+      padding-left: $line-height;
+      color: $white;
     }
   }
 }

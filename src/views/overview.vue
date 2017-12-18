@@ -13,11 +13,6 @@
         <router-link class="overview__project__link" :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
       </router-link>
     </div>
-
-    <div class="overview__shop">
-      <p @click='showShop = true'>Shop</p>
-      <shop v-if='showShop' @close='showShop = false'/>
-    </div>
   </div>
 </template>
 
@@ -116,8 +111,8 @@ export default {
 
     &:nth-child(even) {
       float: right;
-      clear: right;
-      margin-top: $line-height * 8;
+      clear: left;
+      margin-top: $line-height * 3;
       text-align: right;
 
       @include screen-size('small') {
@@ -127,7 +122,7 @@ export default {
 
     &:nth-child(odd) {
       float: left;
-      clear: left;
+      clear: right;
       margin-top: $line-height * 3;
 
       @include screen-size('small') {
@@ -144,7 +139,7 @@ export default {
     }
 
     &:nth-child(2) {
-      margin-top: $line-height * 6;
+      margin-top: $line-height * 3;
 
       @include screen-size('small') {
         margin-top: $line-height-s * 3;

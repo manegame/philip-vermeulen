@@ -35,7 +35,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['GET_POSTS', 'GET_EVENTS']),
+    ...mapActions(['GET_POSTS', 'SET_EVENTS']),
     hideTitle () {
       if (this.$route.name === 'overview') { this.showTitle = true }
       if (this.$route.name === 'singleProject') { this.showTitle = false }
@@ -44,7 +44,7 @@ export default {
   },
   mounted () {
     this.GET_POSTS()
-    this.GET_EVENTS()
+    this.SET_EVENTS()
     this.hideTitle()
   },
   beforeRouteUpdate (to, from, next) {

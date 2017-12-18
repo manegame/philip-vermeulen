@@ -14,11 +14,11 @@ const actions = {
   async [actionTypes.GET_POSTS]({commit, state}) {
     commit(mutationTypes.SET_POSTS, await api.getPosts())
   },
-  async [actionTypes.GET_EVENTS]({commit, state}) {
-    commit(mutationTypes.SET_EVENTS, await api.getEvents())
-  },
   [actionTypes.SET_SINGLE]({commit, state}, post) {
     commit(mutationTypes.SET_SINGLE, post)
+  },
+  async [actionTypes.SET_EVENTS]({commit, state}) {
+    commit(mutationTypes.SORT_EVENTS, await api.getProjects())
   }
 }
 
@@ -28,15 +28,19 @@ const mutations = {
     state.about = data.filter(e => e.type === 'about')
     state.shop = data.filter(e => e.type === 'product')
   },
-  [mutationTypes.SET_EVENTS](state, data) {
-    state.events = data.map((e) => {
-      return e.data.events.map((l) => {
-        return l
-      })
-    })
-  },
   [mutationTypes.SET_SINGLE](state, post) {
     state.single = post
+  },
+  [mutationTypes.SORT_EVENTS](state, data) {
+    data.map((project) => {
+      if (project.data.events) {
+        state.events.push({
+          project: project.data.title[0].text,
+          events: project.data.events,
+          slug: project.slugs[0]
+        })
+      }
+    })
   }
 }
 

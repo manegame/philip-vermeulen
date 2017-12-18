@@ -82,6 +82,10 @@ export default {
     align-items: flex-end;
     text-align: left;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     &:nth-child(even) {
       float: right;
       clear: right;

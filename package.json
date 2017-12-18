@@ -16,7 +16,7 @@
     "babel-polyfill": "^6.23.0",
     "color-js": "^1.0.4",
     "copy-webpack-plugin": "^4.2.0",
-    "moment": "^2.19.1",
+    "date-fns": "^1.29.0",
     "nodemon": "^1.12.1",
     "prismic-dom": "^2.0.6",
     "prismic-javascript": "^1.4.1",

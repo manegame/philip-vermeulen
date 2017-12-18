@@ -6,29 +6,11 @@
     <div class="about__text">
       <p class="about__text__intro">{{main.about[0].data.text[0].text}}</p>
 
-      <p>
-        Contact
-      </p>
-
       <span class="about__text__contact" v-html='renderHTML(this.main.about[0].data.contact)'></span>
-
-      <!-- ORDER -->
-
-      <!-- UPCOMING EXHIBITIONS && SHOP -->
-
-      <!-- About Philip -->
-      <!-- Contact -->
-
-      <!-- Past Exhibitions -->
-
-      <!-- Residencies -->
-      <!-- Internships -->
-      <!-- Education -->
-      <!-- Other -->
 
       <events :close='false' />
 
-      <p>Past Exhibitions: </p>
+      <p>Past Exhibitions</p>
       <ul class="about__text__list" v-for='item in main.about[0].data.past_exhibitions'>
         <p v-html='item.year[0].text'></p>
         <li class="about__text__list__item" v-for='entry in item.list' v-html='entry.text'></li>
@@ -107,8 +89,8 @@ export default {
   height: 100%;
   overflow-y: scroll;
   padding: $margin-top * 9 $margin-sides;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: $font-size-xs;
+  line-height: $line-height-xs;
   background: $theme-r;
   color: $black;
   z-index: -1;

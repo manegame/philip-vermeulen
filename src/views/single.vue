@@ -1,37 +1,11 @@
 <template>
   <div class="single">
 
-    <!-- ORDER -->
-
-    <!-- TOP -->
-
-      <!-- Preview Image -->
-
-    <!-- LEFT -->
-
-      <!-- Title -->
-        <!-- Year -->
-        <!-- Materials -->
-        <!-- (upcoming) -->
-        <!-- Events + Dates -->
-        <!-- (past) -->
-        <!-- Events + Dates  -->
-
-    <!-- RIGHT -->
-
-      <!-- Description -->
-
-    <!-- BOTTOM -->
-
-      <!-- Video -->
-      <!-- Images -->
-
     <div class="single__media">
       <img class='single__media__image' :class='{active : collapse}' :src='main.single.data.preview_image.url' @click='collapse = !collapse'/>
     </div>
 
     <div class="single__desc">
-
       <div class="single__desc--l">
         <p class="single__desc__title" v-html="main.single.data.title[0].text"></p>
         <span>Year:</span>
@@ -55,7 +29,7 @@
 
           <ul class="single__desc--l__events__past">
             <li class="single__desc--l__events__past__item" v-for='a in main.single.data.events'>
-              <span v-if='isPast(a.from)'>
+              <span v-if='isPast(a.from) && a.name[0].text'>
                 {{a.name[0].text}}:
                 {{a.to | monthYear}}
               </span>
@@ -69,16 +43,9 @@
       </div>
     </div>
 
-    <!-- <div class="single__more" v-if='main.single.data.images.length > 0 || main.single.data.vimeo_id != undefined'>
-      <p class="single__more__text">
-        more
-      </p>
-    </div> -->
-
     <div v-if='main.single.data.vimeo_id != undefined' class="single__video">
       <div class='single__video__container'>
         <iframe :src="'https://player.vimeo.com/video/' + main.single.data.vimeo_id + '?title=0&byline=0&portrait=0'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        <!-- <figcaption v-html='section.video_caption'></figcaption> -->
       </div>
     </div>
 
@@ -91,7 +58,6 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import PrismicDOM from 'prismic-dom'
-import moment from 'moment'
 import imageSection from '../components/image-section'
 
 export default {
@@ -128,28 +94,6 @@ export default {
     ...mapActions(['SET_SINGLE']),
     setSingleActionWrapper() {
       this.SET_SINGLE(this.main.projects.find(e => e.slugs[0] === this.$route.params.slug))
-    },
-    isPast(d) {
-      let now = moment()
-      if (now.diff(d, 'days') > 0) {
-        return true
-      } else {
-        return false
-      }
-    }
-  },
-  filters: {
-    pastDate(value) {
-      let now = moment()
-      if (now.diff(value, 'days') > 0) {
-        return true
-      }
-    },
-    upcomingDate(value) {
-      let now = moment()
-      if (now.diff(value, 'days') === 0 || now.diff(value, 'days') < 0) {
-        return true
-      }
     }
   },
   mounted() {
