@@ -1,41 +1,49 @@
 <template>
   <div class="about">
-    <p class="about__shop" @click='showShop = true'>Shop</p>
-    <shop v-if='showShop' @close='showShop = false'/>
+    <div class="about__column">
+      <p class="about__column__shop" @click='showShop = true'>Shop</p>
+      <shop v-if='showShop' @close='showShop = false'/>
 
-    <div class="about__text">
-      <p class="about__text__intro">{{main.about[0].data.text[0].text}}</p>
+      <div class="about__column__text">
+        <p class="about__column__text__intro">{{main.about[0].data.text[0].text}}</p>
 
-      <span class="about__text__contact" v-html='renderHTML(this.main.about[0].data.contact)'></span>
+        <span class="about__column__text__contact" v-html='renderHTML(this.main.about[0].data.contact)'></span>
+      </div>
+    </div>
+
+    <div class="about__column">
 
       <events :close='false' />
 
-      <p>Past Exhibitions</p>
-      <ul class="about__text__list" v-for='item in main.about[0].data.past_exhibitions'>
-        <p v-html='item.year[0].text'></p>
-        <li class="about__text__list__item" v-for='entry in item.list' v-html='entry.text'></li>
-      </ul>
+      <p class="about__column__text__cv" @click='cv = !cv'>CV</p>
 
-      <p>Residencies: </p>
-      <ul class="about__text__list">
-        <li class="about__text__list__item" v-for='item in main.about[0].data.residencies' v-html='item.text'></li>
-      </ul>
+      <span v-if='cv'>
+        <span class="about__column__list-header">Past Exhibitions<br/><br/></span>
+        <ul class="about__column__list" v-for='item in main.about[0].data.past_exhibitions'>
+          <p v-html='item.year[0].text'></p>
+          <li class="about__column__list__item" v-for='entry in item.list' v-html='entry.text'></li>
+        </ul>
 
-      <p>Internships: </p>
-      <ul class="about__text__list">
-        <li class="about__text__list__item" v-for='item in main.about[0].data.internships' v-html='item.text'></li>
-      </ul>
+        <span class="about__column__list-header">Residencies<br/><br/></span>
+        <ul class="about__column__list">
+          <li class="about__column__list__item" v-for='item in main.about[0].data.residencies' v-html='item.text'></li>
+        </ul>
 
-      <p>Education: </p>
-      <ul class="about__text__list">
-        <li class="about__text__list__item" v-for='item in main.about[0].data.education' v-html='item.text'></li>
-      </ul>
+        <span class="about__column__list-header">Internships<br/><br/></span>
+        <ul class="about__column__list">
+          <li class="about__column__list__item" v-for='item in main.about[0].data.internships' v-html='item.text'></li>
+        </ul>
 
-      <p>Other: </p>
-      <ul class="about__text__list">
-        <li class="about__text__list__item" v-for='item in main.about[0].data.other' v-html='item.text'></li>
-      </ul>
+        <span class="about__column__list-header">Education<br/><br/></span>
+        <ul class="about__column__list">
+          <li class="about__column__list__item" v-for='item in main.about[0].data.education' v-html='item.text'></li>
+        </ul>
 
+        <span class="about__column__list-header">Other<br/><br/></span>
+        <ul class="about__column__list">
+          <li class="about__column__list__item" v-for='item in main.about[0].data.other' v-html='item.text'></li>
+        </ul>
+      </span>
     </div>
   </div>
 </template>
@@ -54,7 +62,8 @@ export default {
   },
   data () {
     return {
-      showShop: false
+      showShop: false,
+      cv: true
     }
   },
   computed: {
@@ -85,40 +94,47 @@ export default {
 @import '../style/_variables.scss';
 
 .about {
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
   padding: $margin-top * 9 $margin-sides;
+  min-height: 100%;
+  overflow-y: hidden;
   font-size: $font-size-xs;
   line-height: $line-height-xs;
   background: $theme-r;
   color: $black;
   z-index: -1;
 
-  @include hide-scroll;
+  &__column {
+    @include hide-scroll;
 
-  &__shop {
-    position: fixed;
-    font-size: $font-size;
-    line-height: $line-height;
-    bottom: 0;
-    right: 0;
-    width: 33%;
-    padding-top: $line-height;
-    padding-right: $margin-sides;
-    padding-bottom: $line-height;
-    text-align: right;
-    color: $white;
-  }
+    position: relative;
+    width: 50%;
+    height: 100%;
+    float: left;
 
-  &__text {
-    &__intro {
-      max-width: 80ch;
+    &:nth-child(2) {
+      padding-left: $margin-sides;
     }
 
-    &__intro,
-    &__contact {
+    @include screen-size('small') {
+      width: 100%;
+
+      &:nth-child(2) {
+        padding-left: 0;
+      }
+    }
+
+    &__shop {
+      position: fixed;
+      font-size: $font-size;
+      line-height: $line-height;
+      bottom: 0;
+      right: 0;
+      width: 33%;
+      padding-top: $line-height;
+      padding-right: $margin-sides;
       padding-bottom: $line-height;
+      text-align: right;
+      color: $white;
     }
 
     &__list {
@@ -130,11 +146,22 @@ export default {
       }
     }
 
-    &__contact {
-      display: block;
+    &__text {
+      &__intro {
+        max-width: 80ch;
+      }
 
-      * {
-        color: $white;
+      &__intro,
+      &__contact {
+        padding-bottom: $line-height;
+      }
+
+      &__contact {
+        display: block;
+
+        * {
+          color: $white;
+        }
       }
     }
   }

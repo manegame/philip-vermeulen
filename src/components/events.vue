@@ -1,49 +1,46 @@
 <template>
   <div class="events" :class="{ popup: close }">
-    <span v-if='close' class="events__close" @click='$emit("close")'>×</span>
-
-    <p class="events__head">
-      Upcoming Dates
-    </p>
+    <span class="events__close"
+          v-if='close'
+          @click='$emit("close")'
+          v-html='"×"'/>
 
     <template v-if='all'>
-      Upcoming and past DATES
-      <!-- <ul class="events__list" v-for='item in main.events'>
-        Upcoming
-        <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "future"'>
-          <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
-            <span v-html='item.project'></span> @ <span v-html='event.name[0].text'></span> from <span v-html='event.from'></span> to <span v-html='event.to'></span>
-          </router-link>
+      <ul class="events__list" v-for='item in eventsbyProject'>
+        <span class="events__list__head" v-if='upcomingItems'>
+          Upcoming:
+        </span>
+        <li class="events__list__item--upcoming" v-for='event in item.events' v-if='event.name[0] && checkDate(event.to) === "future"'>
+          <span v-html='event.name[0].text'></span><br/>
+          <span>{{event.from | dayMonthYear}}</span>
+          – <span>{{event.to | dayMonthYear}}</span>
+        </li>
+        <li class="events__list__item--tba" v-for='event in item.events' v-if='event.name[0] && checkDate(event.to) === "tba"'>
+          <span v-html='item.project'></span> @ <span v-html='event.name[0].text'></span>. Dates TBA
+        </li>
+        <span class="events__list__head" v-if='pastItems'>
+          <br/>Past:
+        </span>
+        <li class="events__list__item--past" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "past"'>
+          <span v-html='event.name[0].text'></span><br/>
+          <span>{{event.from | dayMonthYear}}</span>
+          – <span>{{event.to | dayMonthYear}}</span>
         </li>
       </ul>
-
-      <ul class="events__list" v-for='item in main.events'>
-        <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "tba"'>
-          <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
-            <span v-html='item.project'></span> @ <span v-html='event.name[0].text + "."'></span> Dates TBA
-          </router-link>
-        </li>
-      </ul>
-
-      <ul class="events__list" v-for='item in main.events'>
-        Past
-        <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "past"'>
-          <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
-            <span v-html='item.project'></span> @ <span v-html='event.name[0].text + "."'></span> Dates TBA
-          </router-link>
-        </li>
-      </ul> -->
     </template>
 
     <template v-else>
+      <p class="events__head">
+        Upcoming events
+      </p>
+
       <ul class="events__list" v-for='item in main.events'>
         <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "future"'>
           <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
-            <span v-html='item.project'></span> @ <span v-html='event.name[0].text'></span> from <span v-html='event.from'></span> to <span v-html='event.to'></span>
+            <span v-html='item.project'></span> @ <span v-html='event.name[0].text'></span> from <span>{{event.from | dayMonthYear}}</span> to <span>{{event.to | dayMonthYear}}</span>
           </router-link>
         </li>
       </ul>
-
       <ul class="events__list" v-for='item in main.events'>
         <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "tba"'>
           <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
@@ -61,6 +58,12 @@ import {isFuture, isPast, isEqual, parse} from 'date-fns'
 
 export default {
   name: 'events',
+  data() {
+    return {
+      upcomingItems: false,
+      pastItems: false
+    }
+  },
   props: {
     close: {
       type: Boolean,
@@ -69,23 +72,40 @@ export default {
     all: {
       type: Boolean,
       required: false
+    },
+    project: {
+      type: String,
+      required: false
     }
   },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    eventsbyProject() {
+      return this.main.events.filter(event => event.project === this.project)
+    }
   },
   methods: {
     ...mapActions(['GET_POSTS']),
     checkDate (date) {
-      let tba = new Date(1986, 10, 28)
-      console.log(parse(tba), parse(date))
-      if (isEqual(parse(tba), parse(date))) return 'tba'
-      else if (isPast(parse(date))) return 'past'
-      else if (isFuture(parse(date))) return 'future'
+      const tba = new Date(1986, 10, 28)
+      if (isEqual(parse(tba), parse(date))) {
+        this.upcomingItems = true
+        return 'tba'
+      } else if (isPast(parse(date))) {
+        this.pastItems = true
+        return 'past'
+      } else if (isFuture(parse(date))) {
+        this.upcomingItems = true
+        return 'future'
+      }
     }
   },
   mounted () {
     this.GET_POSTS()
+  },
+  beforeDestroy() {
+    this.upcomingItems = false
+    this.pastItems = false
   }
 }
 </script>
@@ -130,11 +150,22 @@ export default {
     }
   }
 
-  &__head {
-    color: $black;
-  }
-
   &__list {
+    color: $white;
+
+    &__head {
+      line-height: $line-height-xs;
+      height: $line-height-xs;
+
+      &::before {
+        &:not(:first-child) {
+          content: '';
+          display: block;
+          height: $line-height-xs;
+        }
+      }
+    }
+
     &__item {
       padding-left: $line-height;
       color: $white;

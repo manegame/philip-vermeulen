@@ -7,6 +7,7 @@
 
     <div class="single__desc">
       <div class="single__desc--l">
+        <span>Title:</span>
         <p class="single__desc__title" v-html="main.single.data.title[0].text"></p>
         <span>Year:</span>
         <p class="single__desc__year" v-html="main.single.data.year[0].text"></p>
@@ -16,10 +17,7 @@
         </ul><br/>
 
         <div class="single__desc--l__events" v-if='main.single.data.events.length > 0'>
-          <p>Events</p>
-
-          <events :all='true'/>
-
+          <events :all='true' :project='main.single.data.title[0].text'/>
         </div>
       </div>
 
@@ -30,7 +28,7 @@
 
     <div v-if='main.single.data.vimeo_id != undefined' class="single__video">
       <div class='single__video__container'>
-        <iframe :src="'https://player.vimeo.com/video/' + main.single.data.vimeo_id + '?title=0&byline=0&portrait=0'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <iframe :src="'https://player.vimeo.com/video/' + main.single.data.vimeo_id + '?color=C3D6c3&title=0&byline=0&portrait=0'" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
       </div>
     </div>
 
@@ -158,32 +156,6 @@ export default {
         color: $theme-r;
         margin-left: -10px;
         padding-left: 10px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-
-        &__upcoming {
-          padding-bottom: $line-height;
-
-          &__item {
-            &:first-child {
-              &::before {
-                content: 'Upcoming:';
-                display: block;
-              }
-            }
-          }
-        }
-
-        &__past {
-          &__item {
-            &:first-child {
-              &::before {
-                content: 'Past:';
-                display: block;
-              }
-            }
-          }
-        }
       }
     }
 
@@ -228,7 +200,7 @@ export default {
     height: auto;
     margin: 0 auto;
     padding-top: $line-height;
-    padding-bottom: $line-height;
+    padding-bottom: $line-height * 2;
     max-width: 100%;
 
     @include screen-size('small') {

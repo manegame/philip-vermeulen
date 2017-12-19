@@ -6,7 +6,6 @@ import single from './views/single'
 import about from './views/about'
 import App from './App'
 import store from './store'
-// import moment from 'moment'
 import {parse, format} from 'date-fns'
 
 Vue.use(VueRouter)
