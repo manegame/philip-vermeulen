@@ -135,6 +135,8 @@ export default {
       padding-bottom: $line-height;
       text-align: right;
       color: $white;
+      cursor: pointer;
+      z-index: 99;
     }
 
     &__list {

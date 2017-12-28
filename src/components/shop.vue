@@ -49,16 +49,18 @@ export default {
 .shop {
   font-size: $font-size;
   line-height: $line-height;
+  background: $black;
+  color: $white;
+  padding: $line-height * 2 $margin-sides;
   position: fixed;
   width: 100vw;
   height: 100vh;
   overflow-y: scroll;
+  z-index: 1000;
   top: 0;
   left: 0;
-  background: $black;
-  z-index: 1000;
-  color: $white;
-  padding: $line-height * 2 $margin-sides;
+  display: flex;
+  flex-flow: row wrap;
   cursor: pointer;
 
   @include hide-scroll;
@@ -75,39 +77,29 @@ export default {
   }
 
   &__item {
-    height: $line-height * 9;
-    margin-top: $line-height;
-    margin-bottom: $line-height;
+    position: relative;
+    width: 100%;
+    margin: $margin-top 0;
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-end;
-    text-align: left;
+    justify-content: space-between;
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    &:nth-child(even) {
-      float: right;
-      clear: right;
-      flex-direction: row-reverse;
-
-      img {
-        padding-right: 0;
-        padding-left: $line-height;
-      }
-
-      * {
-        text-align: right;
-      }
-    }
-
-    &:nth-child(odd) {
-      float: left;
-      clear: left;
+    &__image {
+      object-fit: contain;
+      height: $line-height * 9;
+      padding-right: $line-height;
+      padding-left: 0;
     }
 
     &__meta {
-      color: $white;
+      display: block;
+      padding-top: $line-height;
+      flex-grow: 1;
+
+      @include screen-size('small') {
+        padding: $line-height 0;
+      }
 
       &__title,
       &__price {
@@ -120,7 +112,7 @@ export default {
       }
 
       &__paypal {
-        text-align: left;
+        padding-top: 10px;
 
         img {
           width: 1px;
@@ -129,12 +121,17 @@ export default {
       }
     }
 
-    &__image {
-      object-fit: contain;
-      width: auto;
-      height: 100%;
-      padding-right: $line-height;
-      padding-left: 0;
+    &:nth-child(odd) {
+      .shop__item__image {
+        order: 2;
+        padding: 0;
+      }
+
+      .shop__item__meta {
+        order: 1;
+        text-align: right;
+        padding-right: $margin-sides;
+      }
     }
   }
 }

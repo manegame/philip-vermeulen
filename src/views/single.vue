@@ -7,7 +7,6 @@
 
     <div class="single__desc">
       <div class="single__desc--l">
-        <span>Title:</span>
         <p class="single__desc__title" v-html="main.single.data.title[0].text"></p>
         <span>Year:</span>
         <p class="single__desc__year" v-html="main.single.data.year[0].text"></p>
@@ -100,7 +99,7 @@ export default {
 
 .single {
   background: $black;
-  color: $theme-r;
+  color: $white;
   font-size: $font-size-s;
   line-height: $line-height-s;
   padding: $line-height * 3 $margin-sides;
@@ -123,6 +122,10 @@ export default {
 
     @include screen-size('small') {
       margin-bottom: $line-height-s * 2;
+    }
+
+    &__title {
+      color: $theme-r;
     }
 
     &--l {
@@ -232,10 +235,10 @@ export default {
       object-fit: cover;
       object-position: 50% 50%;
       height: auto;
-      max-height: 85vh;
+      max-height: 70vh;
 
       &.active {
-        max-height: 70vh;
+        max-height: 85vh;
       }
 
       transition: max-height 0.03s linear;
