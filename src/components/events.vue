@@ -37,14 +37,26 @@
       <ul class="events__list" v-for='item in main.events'>
         <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "future"'>
           <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
-            <span v-html='item.project'></span> @ <span v-html='event.name[0].text'></span> from <span>{{event.from | dayMonthYear}}</span> to <span>{{event.to | dayMonthYear}}</span>
+            <span class="events__list__item__title"
+                  v-html='item.project'/>
+            <span class="events__list__item__location"
+                  v-html='"@ " + event.name[0].text'/>
+            <br/>
+            <span class="events__list__item__date">{{event.from | dayMonthYear}}</span>
+            –
+            <span class="events__list__item__date">{{event.to | dayMonthYear}}</span>
           </router-link>
         </li>
       </ul>
       <ul class="events__list" v-for='item in main.events'>
         <li class="events__list__item" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "tba"'>
           <router-link :to="{name: 'singleProject', params: {slug: item.slug}}">
-            <span v-html='item.project'></span> @ <span v-html='event.name[0].text + "."'></span> Dates TBA
+            <span class="events__list__item__title"
+                  v-html='item.project'/>
+            <span class="events__list__item__location"
+                  v-html='"@ " + event.name[0].text + "."'/>
+            <br/>
+            Dates TBA
           </router-link>
         </li>
       </ul>
@@ -131,7 +143,7 @@ export default {
     line-height: $line-height-s;
 
     .events__head {
-      color: black !important;
+      color: white !important;
       padding-bottom: $line-height / 2;
     }
 
@@ -169,6 +181,11 @@ export default {
     &__item {
       padding-left: $line-height;
       color: $white;
+
+      &__title,
+      &__location {
+        color: black;
+      }
     }
   }
 }

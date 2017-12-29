@@ -1,6 +1,15 @@
 <template>
-  <div class="slideshow" @click='$emit("close")'>
+  <div class="slideshow" @click.self='$emit("close")'>
     <img class="slideshow__image" :src='images[index].image.url'/>
+    <div class="slideshow__nav"
+         v-if="max > 1">
+      <a class='slideshow__nav__button'
+         @click='previous'><</a>
+      <a class='slideshow__nav__button'
+         @click='next'>></a>
+      <a class='slideshow__nav__close'
+         @click='$emit("close")'>×</a>
+    </div>
   </div>
 </template>
 
@@ -21,6 +30,48 @@ export default {
       type: Number,
       required: true
     }
+  },
+  methods: {
+    navigation(event) {
+      if (event.keyCode === 37) this.previous()
+      if (event.keyCode === 39) this.next()
+      if (event.keyCode === 27) this.$emit('close')
+    },
+    previous() {
+      if (this.index > 0) {
+        this.index--
+        if (this.images[this.index].type === 'none') {
+          this.previous()
+        }
+      } else {
+        this.index = this.max - 1
+      }
+    },
+    next() {
+      if (this.index < this.max - 1) {
+        this.index++
+        if (this.images[this.index].type === 'none') {
+          this.next()
+        }
+      } else {
+        this.index = 0
+      }
+    }
+  },
+  computed: {
+    max() {
+      return this.images.length
+    },
+    countMax() {
+      let skip = this.images.filter(image => image.type === 'none')
+      return this.max - skip.length
+    }
+  },
+  created() {
+    window.addEventListener('keydown', this.navigation)
+  },
+  beforeDestroy() {
+    window.removeEventListener('keydown', this.navigation)
   }
 }
 </script>
@@ -46,9 +97,28 @@ export default {
 
   &__image {
     object-fit: contain;
-    width: 90%;
+    width: calc(100% - (4 * #{$margin-sides}));
     height: auto;
-    max-height: 90%;
+    max-height: calc(100vh - (7 * #{$margin-top}));
+  }
+
+  &__nav {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    &__button {
+      margin: 0 $margin-sides;
+    }
+
+    &__close {
+      position: fixed;
+      bottom: $margin-top;
+      width: 100%;
+      text-align: center;
+    }
   }
 }
 </style>
