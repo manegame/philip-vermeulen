@@ -94,7 +94,7 @@ export default {
     margin: 0;
     padding-left: 0;
     padding-right: 0;
-    padding-top: $line-height * 2;
+    padding-top: $line-height * 3;
   }
 
   &__project {

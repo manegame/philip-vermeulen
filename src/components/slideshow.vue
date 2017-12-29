@@ -1,14 +1,14 @@
 <template>
   <div class="slideshow" @click.self='$emit("close")'>
-    <img class="slideshow__image" :src='images[index].image.url'/>
+    <img class="slideshow__image"
+        :src='images[index].image.url'
+        @click='$emit("close")'/>
     <div class="slideshow__nav"
          v-if="max > 1">
       <a class='slideshow__nav__button'
          @click='previous'><</a>
       <a class='slideshow__nav__button'
          @click='next'>></a>
-      <a class='slideshow__nav__close'
-         @click='$emit("close")'>×</a>
     </div>
   </div>
 </template>
@@ -100,6 +100,7 @@ export default {
     width: calc(100% - (4 * #{$margin-sides}));
     height: auto;
     max-height: calc(100vh - (7 * #{$margin-top}));
+    z-index: 99;
   }
 
   &__nav {
@@ -108,12 +109,15 @@ export default {
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    z-index: 90;
 
     &__button {
+      font-size: 30px;
       margin: 0 $margin-sides;
     }
 
     &__close {
+      font-size: 30px;
       position: fixed;
       bottom: $margin-top;
       width: 100%;
