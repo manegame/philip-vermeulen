@@ -5,10 +5,12 @@
         @click='$emit("close")'/>
     <div class="slideshow__nav"
          v-if="max > 1">
-      <a class='slideshow__nav__button'
-         @click='previous'><</a>
-      <a class='slideshow__nav__button'
-         @click='next'>></a>
+      <a class='slideshow__nav__button--previous'
+         @click='previous'></a>
+      <a class='slideshow__nav__button--next'
+         @click='next'></a>
+      <a class='slideshow__nav__button--close'
+         @click='$emit("close")'></a>
     </div>
   </div>
 </template>
@@ -101,6 +103,10 @@ export default {
     height: auto;
     max-height: calc(100vh - (7 * #{$margin-top}));
     z-index: 99;
+
+    @include screen-size('small') {
+      width: calc(100% - (2 * #{$margin-sides}));
+    }
   }
 
   &__nav {
@@ -111,17 +117,70 @@ export default {
     align-items: center;
     z-index: 90;
 
-    &__button {
-      font-size: 30px;
-      margin: 0 $margin-sides;
+    @include screen-size('small') {
+      height: 100%;
+      z-index: 100;
     }
 
-    &__close {
+    &__button--next,
+    &__button--previous {
       font-size: 30px;
-      position: fixed;
-      bottom: $margin-top;
-      width: 100%;
-      text-align: center;
+      margin: 0 $margin-sides;
+
+      @include screen-size('small') {
+        width: 50%;
+        height: 100%;
+        margin: 0;
+      }
+    }
+
+    &__button--next {
+      &::before {
+        content: '>';
+      }
+
+      @include screen-size('small') {
+        &:hover {
+          cursor: e-resize;
+        }
+
+        &::before {
+          content: '';
+        }
+      }
+    }
+
+    &__button--previous {
+      &::before {
+        content: '<';
+      }
+
+      @include screen-size('small') {
+        &:hover {
+          cursor: w-resize;
+        }
+
+        &::before {
+          content: '';
+        }
+      }
+    }
+
+    &__button--close {
+      display: none;
+
+      @include screen-size('small') {
+        display: block;
+        font-size: $font-size-s;
+        position: fixed;
+        bottom: $margin-top;
+        width: 100%;
+        text-align: center;
+
+        &::before {
+          content: '×';
+        }
+      }
     }
   }
 }

@@ -45,16 +45,31 @@ export default {
   &__item {
     position: relative;
     float: left;
+    height: $line-height * 8;
     width: auto;
     max-width: 100%;
-    height: $line-height * 8;
     padding-bottom: $line-height;
-    padding-right: $line-height;
     object-fit: cover;
+
+    @include screen-size('small') {
+      padding-right: 0;
+      height: auto;
+      width: 100%;
+      object-fit: cover;
+    }
 
     &__image {
       cursor: pointer;
       height: 100%;
+      width: auto;
+      object-fit: cover;
+
+      @include screen-size('small') {
+        height: auto;
+        max-height: 40vh;
+        width: 100%;
+        object-fit: contain;
+      }
     }
   }
 }

@@ -9,11 +9,11 @@
 
         <span class="about__column__text__contact" v-html='renderHTML(this.main.about[0].data.contact)'></span>
       </div>
+
+      <events :close='false' :about='true'/>
     </div>
 
     <div class="about__column">
-
-      <events :close='false' />
 
       <p class="about__column__text__cv" @click='cv = !cv'>CV</p>
 
@@ -137,6 +137,11 @@ export default {
       color: $white;
       cursor: pointer;
       z-index: 99;
+
+      @include screen-size('small') {
+        font-size: $font-size-s;
+        line-height: $line-height-s;
+      }
     }
 
     &__list {
@@ -145,6 +150,10 @@ export default {
 
       &__item {
         padding-left: $line-height;
+
+        @include screen-size('small') {
+          padding-left: $margin-sides / 4;
+        }
       }
     }
 

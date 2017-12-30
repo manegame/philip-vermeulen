@@ -74,6 +74,16 @@ export default {
     padding-right: $margin-sides;
     padding-top: $margin-top;
     height: auto;
+
+    @include screen-size('small') {
+      font-size: $font-size-s;
+      line-height: $line-height-s;
+      top: auto;
+      bottom: $margin-top;
+      width: 100%;
+      text-align: center;
+      padding-right: 0;
+    }
   }
 
   &__item {
@@ -90,6 +100,13 @@ export default {
       height: $line-height * 9;
       padding-right: $line-height;
       padding-left: 0;
+
+      @include screen-size('small') {
+        padding: 0;
+        height: auto;
+        width: 100%;
+        object-fit: cover;
+      }
     }
 
     &__meta {
@@ -98,7 +115,10 @@ export default {
       flex-grow: 1;
 
       @include screen-size('small') {
-        padding: $line-height 0;
+        font-size: $font-size-xs;
+        line-height: $line-height-xs;
+        padding-top: $line-height-xs;
+        padding-right: 0;
       }
 
       &__title,
@@ -109,6 +129,11 @@ export default {
       &__description {
         font-size: $font-size-s;
         line-height: $line-height-s;
+
+        @include screen-size('small') {
+          font-size: $font-size-xs;
+          line-height: 10px;
+        }
       }
 
       &__paypal {
@@ -125,12 +150,23 @@ export default {
       .shop__item__image {
         order: 2;
         padding: 0;
+
+        @include screen-size('small') {
+          order: 1;
+        }
       }
 
       .shop__item__meta {
         order: 1;
         text-align: right;
         padding-right: $margin-sides;
+
+        @include screen-size('small') {
+          font-size: $font-size-xs;
+          line-height: $line-height-xs;
+          padding-top: $line-height-xs;
+          padding-right: 0;
+        }
       }
     }
   }

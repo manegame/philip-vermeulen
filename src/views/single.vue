@@ -167,9 +167,17 @@ export default {
       flex-grow: 2;
       padding-left: 10px;
 
+      @include screen-size('small') {
+        padding-left: 0;
+      }
+
       &__text {
         padding-left: 20px;
         max-width: 80ch;
+
+        @include screen-size('small') {
+          padding-left: 0;
+        }
 
         a {
           color: red !important;
@@ -179,10 +187,6 @@ export default {
           &::after {
             content: 'a';
           }
-        }
-
-        @include screen-size('small') {
-          padding-left: 0;
         }
       }
     }

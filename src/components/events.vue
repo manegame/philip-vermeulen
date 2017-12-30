@@ -1,5 +1,5 @@
 <template>
-  <div class="events" :class="{ popup: close }">
+  <div class="events" :class="{ popup: close, 'about-page': about }">
     <span class="events__close"
           v-if='close'
           @click='$emit("close")'
@@ -7,22 +7,31 @@
 
     <template v-if='all'>
       <ul class="events__list" v-for='item in eventsbyProject'>
+
         <span class="events__list__head" v-if='upcomingItems'>
           Upcoming:
         </span>
+
         <li class="events__list__item--upcoming" v-for='event in item.events' v-if='event.name[0] && checkDate(event.to) === "future"'>
-          <span v-html='event.name[0].text'></span><br/>
+          <span class="events__list__item__title"
+                v-html='event.name[0].text'></span><br/>
           <span>{{event.from | dayMonthYear}}</span>
           – <span>{{event.to | dayMonthYear}}</span>
         </li>
+
         <li class="events__list__item--tba" v-for='event in item.events' v-if='event.name[0] && checkDate(event.to) === "tba"'>
-          <span v-html='item.project'></span> @ <span v-html='event.name[0].text'></span>. Dates TBA
+          <span class="events__list__item__title"
+                v-html='event.name[0].text'></span><br/>
+          Dates TBA
         </li>
+
         <span class="events__list__head" v-if='pastItems'>
-          <br/>Past:
+          Past:
         </span>
+
         <li class="events__list__item--past" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "past"'>
-          <span v-html='event.name[0].text'></span><br/>
+          <span class="events__list__item__title"
+                v-html='event.name[0].text'></span><br/>
           <span>{{event.from | dayMonthYear}}</span>
           – <span>{{event.to | dayMonthYear}}</span>
         </li>
@@ -77,6 +86,10 @@ export default {
     }
   },
   props: {
+    about: {
+      type: Boolean,
+      required: false
+    },
     close: {
       type: Boolean,
       required: false
@@ -131,6 +144,29 @@ export default {
   width: auto;
   margin-bottom: $line-height-s;
 
+  &.about-page {
+    .events__head {
+      &::after {
+        content: '';
+        height: $line-height-xs;
+        display: block;
+      }
+    }
+
+    .events__list__item {
+      &::after {
+        content: '';
+        height: $line-height-xs / 2;
+        display: block;
+      }
+    }
+
+    .events__list__item__title,
+    .events__list__item__location {
+      color: $black;
+    }
+  }
+
   &.popup {
     text-align: center;
     padding: $line-height-s / 2 $line-height * 1.5 $line-height-s / 2;
@@ -141,6 +177,11 @@ export default {
     position: relative;
     font-size: $font-size-s;
     line-height: $line-height-s;
+
+    @include screen-size('small') {
+      font-size: $font-size-xs;
+      line-height: $line-height-xs;
+    }
 
     .events__head {
       color: white !important;
@@ -160,6 +201,11 @@ export default {
     .events__list__item {
       padding-left: 0;
     }
+
+    .events__list__item__title,
+    .events__list__item__location {
+      color: black;
+    }
   }
 
   &__list {
@@ -169,9 +215,15 @@ export default {
       line-height: $line-height-xs;
       height: $line-height-xs;
 
-      &::before {
-        &:not(:first-child) {
-          content: '';
+      &::after {
+        content: '';
+        height: $line-height-xs / 2;
+        display: block;
+      }
+
+      &:not(:first-child) {
+        &::before {
+          content: ' ';
           display: block;
           height: $line-height-xs;
         }
@@ -182,9 +234,23 @@ export default {
       padding-left: $line-height;
       color: $white;
 
+      @include screen-size('small') {
+        padding-left: $margin-sides / 4;
+      }
+
+      &--upcoming,
+      &--past,
+      &--tba {
+        &::after {
+          content: '';
+          height: $line-height-xs / 2;
+          display: block;
+        }
+      }
+
       &__title,
       &__location {
-        color: black;
+        color: $theme-r;
       }
     }
   }

@@ -152,8 +152,8 @@ export default {
     }
 
     &__link {
-      font-size: $font-size-s;
-      line-height: $line-height-s;
+      font-size: $font-size-xs;
+      line-height: $line-height-xs;
       color: $black;
       width: auto;
       display: none;
