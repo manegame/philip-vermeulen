@@ -3,6 +3,11 @@ import * as actionTypes from '../actionTypes'
 import * as mutationTypes from '../mutationTypes'
 
 const state = {
+  color: {
+    hue: 0,
+    sat: 18,
+    lit: 80
+  },
   projects: [],
   single: {},
   about: [],
@@ -11,6 +16,9 @@ const state = {
 }
 
 const actions = {
+  [actionTypes.SET_COLOR]({commit, state}) {
+    commit(mutationTypes.SET_COLOR)
+  },
   async [actionTypes.GET_POSTS]({commit, state}) {
     commit(mutationTypes.SET_POSTS, await api.getPosts())
   },
@@ -23,6 +31,13 @@ const actions = {
 }
 
 const mutations = {
+  [mutationTypes.SET_COLOR](state) {
+    if (state.color.hue < 360) {
+      state.color.hue++
+    } else {
+      state.color.hue = 0
+    }
+  },
   [mutationTypes.SET_POSTS](state, data) {
     state.projects = data.filter(e => e.type === 'project')
     state.about = data.filter(e => e.type === 'about')
@@ -44,8 +59,15 @@ const mutations = {
   }
 }
 
+const getters = {
+  dynamicColor: (state) => {
+    return 'hsl(' + state.color.hue + ', ' + state.color.sat + '%, ' + state.color.lit + '%)'
+  }
+}
+
 export default {
   state,
+  getters,
   actions,
   mutations
 }

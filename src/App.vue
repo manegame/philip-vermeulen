@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapActions, mapGetters} from 'vuex'
 import overview from './views/overview'
 import headbar from './components/headbar'
 
@@ -25,7 +25,8 @@ export default {
     ...mapState([
       'main',
       'variables'
-    ])
+    ]),
+    ...mapGetters(['dynamicColor'])
   },
   head: {
     title () {
@@ -35,7 +36,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['GET_POSTS', 'SET_EVENTS']),
+    ...mapActions(['GET_POSTS', 'SET_EVENTS', 'SET_COLOR']),
     hideTitle () {
       if (this.$route.name === 'overview') { this.showTitle = true }
       if (this.$route.name === 'singleProject') { this.showTitle = false }
@@ -46,6 +47,9 @@ export default {
     this.GET_POSTS()
     this.SET_EVENTS()
     this.hideTitle()
+    window.setInterval(() => {
+      this.SET_COLOR()
+    }, 100)
   },
   beforeRouteUpdate (to, from, next) {
     console.log('to, from, next')

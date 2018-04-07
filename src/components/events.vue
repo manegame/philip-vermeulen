@@ -1,5 +1,7 @@
 <template>
-  <div class="events" :class="{ popup: close, 'about-page': about }">
+  <div class="events" 
+       :class="{ popup: close, 'about-page': about }" 
+       :style='!all ? { background: dynamicColor } : { background: "black" }'>
     <span class="events__close"
           v-if='close'
           @click='$emit("close")'
@@ -14,6 +16,7 @@
 
         <li class="events__list__item--upcoming" v-for='event in item.events' v-if='event.name[0] && checkDate(event.to) === "future"'>
           <span class="events__list__item__title"
+                :style='{ color: dynamicColor }'
                 v-html='event.name[0].text'></span><br/>
           <span>{{event.from | dayMonthYear}}</span>
           – <span>{{event.to | dayMonthYear}}</span>
@@ -21,6 +24,7 @@
 
         <li class="events__list__item--tba" v-for='event in item.events' v-if='event.name[0] && checkDate(event.to) === "tba"'>
           <span class="events__list__item__title"
+                :style='{ color: dynamicColor }'
                 v-html='event.name[0].text'></span><br/>
           Dates TBA
         </li>
@@ -31,6 +35,7 @@
 
         <li class="events__list__item--past" v-for='event in item.events'  v-if='event.name[0] && checkDate(event.to) === "past"'>
           <span class="events__list__item__title"
+                :style='{ color: dynamicColor }'
                 v-html='event.name[0].text'></span><br/>
           <span>{{event.from | dayMonthYear}}</span>
           – <span>{{event.to | dayMonthYear}}</span>
@@ -74,7 +79,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapActions, mapGetters} from 'vuex'
 import {isFuture, isPast, isEqual, parse} from 'date-fns'
 
 export default {
@@ -105,6 +110,7 @@ export default {
   },
   computed: {
     ...mapState(['main']),
+    ...mapGetters(['dynamicColor']),
     eventsbyProject() {
       return this.main.events.filter(event => event.project === this.project)
     }
@@ -170,7 +176,7 @@ export default {
   &.popup {
     text-align: center;
     padding: $line-height-s / 2 $line-height * 1.5 $line-height-s / 2;
-    background: $theme-r;
+    background: $theme-r; /* override with functoin */
     color: $white;
     width: 80%;
     float: left;
@@ -248,9 +254,8 @@ export default {
         }
       }
 
-      &__title,
-      &__location {
-        color: $theme-r;
+      &__title {
+        color: $theme-r; /* override by dynamicColor */
       }
     }
   }
