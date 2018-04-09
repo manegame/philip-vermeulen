@@ -3,15 +3,15 @@
     <div class="headbar__columns">
 
       <div class="headbar__columns__column--l">
-        <router-link class="headbar__columns__column--l__link" to="/">Philip Vermeulen</router-link>
+        <router-link :style='{ color: dynamicColor }' class="headbar__columns__column--l__link" to="/">Philip Vermeulen</router-link>
       </div>
 
       <div class="headbar__columns__column--m">
-        <router-link class="headbar__columns__column--m__link" v-if='showTitle' :to="{ name: 'singleProject', params: {slug: variables.project.slug} }">{{variables.project.title}}</router-link>
+        <router-link :style='{ color: dynamicColor }' class="headbar__columns__column--m__link" v-if='showTitle' :to="{ name: 'singleProject', params: {slug: variables.project.slug} }">{{variables.project.title}}</router-link>
       </div>
 
       <div class="headbar__columns__column--r">
-        <router-link class="headbar__columns__column--r__link" :to="{name: 'about'}">About</router-link>
+        <router-link :style='{ color: dynamicColor }' class="headbar__columns__column--r__link" :to="{name: 'about'}">About</router-link>
       </div>
 
     </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapActions, mapGetters} from 'vuex'
 export default {
   name: 'headbar',
   props: {
@@ -34,7 +34,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main', 'variables'])
+    ...mapState(['main', 'variables']),
+    ...mapGetters(['dynamicColor'])
   },
   methods: {
     ...mapActions(['GET_POSTS'])

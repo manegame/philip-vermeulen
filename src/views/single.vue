@@ -7,7 +7,7 @@
 
     <div class="single__desc">
       <div class="single__desc--l">
-        <p class="single__desc__title" v-html="main.single.data.title[0].text"></p>
+        <p :style='{ color: dynamicColor }' class="single__desc__title" v-html="main.single.data.title[0].text"></p>
         <span>Year:</span>
         <p class="single__desc__year" v-html="main.single.data.year[0].text"></p>
         <span>Materials:</span>
@@ -15,7 +15,7 @@
           <li class="single__desc--l__material__item" v-for="material in main.single.data.materials" v-html="material.text"></li>
         </ul><br/>
 
-        <div class="single__desc--l__events" v-if='main.single.data.events.length > 0'>
+        <div class="single__desc--l__events" v-if='main.single.data.events.length > 0' :style='{ color: dynamicColor }'>
           <events :all='true' :project='main.single.data.title[0].text'/>
         </div>
       </div>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapActions, mapGetters} from 'vuex'
 import PrismicDOM from 'prismic-dom'
 import imageSection from '../components/image-section'
 import events from '../components/events'
@@ -63,6 +63,7 @@ export default {
   },
   computed: {
     ...mapState(['main', 'variables']),
+    ...mapGetters(['dynamicColor']),
     renderHTML() {
       return PrismicDOM.RichText.asHtml(this.main.single.data.description, doc => doc)
     }

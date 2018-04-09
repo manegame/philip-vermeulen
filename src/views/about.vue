@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about" :style='{ background: dynamicColor }'>
     <div class="about__column">
       <p class="about__column__shop" @click='showShop = true'>Shop</p>
       <shop v-if='showShop' @close='showShop = false'/>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapActions, mapGetters} from 'vuex'
 import PrismicDOM from 'prismic-dom'
 import shop from '../components/shop'
 import events from '../components/events'
@@ -67,7 +67,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main', 'variables'])
+    ...mapState(['main', 'variables']),
+    ...mapGetters(['dynamicColor'])
   },
   head: {
     title() {
