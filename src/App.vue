@@ -16,16 +16,15 @@ export default {
     overview,
     headbar
   },
-  data () {
-    return {
-      showTitle: true
-    }
-  },
   computed: {
     ...mapState([
       'main',
       'variables'
     ]),
+    showTitle() {
+      if (this.$route.name === 'pdf') return false
+      else return true
+    },
     ...mapGetters(['dynamicColor'])
   },
   head: {

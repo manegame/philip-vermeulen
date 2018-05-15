@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import overview from './views/overview'
 import single from './views/single'
 import about from './views/about'
+import pdf from './views/pdf'
 import App from './App'
 import store from './store'
 import {parse, format} from 'date-fns'
@@ -45,6 +46,11 @@ const router = new VueRouter({
       path: '/about',
       name: 'about',
       component: about
+    },
+    {
+      path: '/pdf',
+      name: 'pdf',
+      component: pdf
     }
   ]
 })

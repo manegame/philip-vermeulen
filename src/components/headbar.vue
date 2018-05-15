@@ -1,19 +1,38 @@
 <template>
   <div class="headbar">
     <div class="headbar__columns">
-
-      <div class="headbar__columns__column--l">
-        <router-link :style='{ color: dynamicColor }' class="headbar__columns__column--l__link" to="/">Philip Vermeulen</router-link>
+      <div class="headbar__columns__column--l"
+           v-if='$route.name !== "pdf"'>
+        <router-link  :style='{ color: dynamicColor }' 
+                      class="headbar__columns__column--l__link" 
+                      to="/">
+                        Philip Vermeulen
+        </router-link>
+      </div>
+      <div class="headbar__columns__column--l"
+           v-else>
+        <router-link  class="headbar__columns__column--l__link" 
+                      to="/">
+                        Philip Vermeulen
+        </router-link>
       </div>
 
       <div class="headbar__columns__column--m">
-        <router-link :style='{ color: dynamicColor }' class="headbar__columns__column--m__link" v-if='showTitle' :to="{ name: 'singleProject', params: {slug: variables.project.slug} }">{{variables.project.title}}</router-link>
+        <router-link  :style='{ color: dynamicColor }' 
+                      class="headbar__columns__column--m__link" 
+                      v-if='showTitle' 
+                      :to="{ name: 'singleProject', params: {slug: variables.project.slug} }">
+                        {{variables.project.title}}
+        </router-link>
       </div>
 
       <div class="headbar__columns__column--r">
-        <router-link :style='{ color: dynamicColor }' class="headbar__columns__column--r__link" :to="{name: 'about'}">About</router-link>
+        <router-link  :style='{ color: dynamicColor }' 
+                      class="headbar__columns__column--r__link" 
+                      :to="{name: 'about'}">
+                        About
+        </router-link>
       </div>
-
     </div>
   </div>
 </template>
