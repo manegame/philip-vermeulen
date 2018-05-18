@@ -1,10 +1,10 @@
 <template>
-  <div class="headbar">
+  <div  class="headbar"
+        :style='{ zIndex: $route.name === "main" ? 1000 : 0 }' >
     <div class="headbar__columns">
       <div class="headbar__columns__column--l"
            v-if='$route.name !== "pdf"'>
-        <router-link  :style='{ color: dynamicColor }' 
-                      class="headbar__columns__column--l__link" 
+        <router-link  class="headbar__columns__column--l__link" 
                       to="/">
                         Philip Vermeulen
         </router-link>
@@ -28,7 +28,8 @@
 
       <div class="headbar__columns__column--r">
         <router-link  :style='{ color: dynamicColor }' 
-                      class="headbar__columns__column--r__link" 
+                      class="headbar__columns__column--r__link"
+                      v-if="$route.name !== 'about'"
                       :to="{name: 'about'}">
                         About
         </router-link>
@@ -71,7 +72,6 @@ export default {
   position: fixed;
   width: 100%;
   padding: $margin-top $margin-sides;
-  z-index: 0;
 
   @include screen-size('small') {
     padding: $margin-top $line-height-s;

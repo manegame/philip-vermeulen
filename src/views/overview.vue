@@ -69,7 +69,6 @@ export default {
   },
   mounted() {
     this.GET_POSTS()
-    console.log(this.SHOW_DATES)
   },
   watch: {
     $route(to, from) {}

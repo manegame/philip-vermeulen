@@ -2,37 +2,62 @@
   <div class="single">
 
     <div class="single__media">
-      <img class='single__media__image' :class='{active : collapse}' :src='main.single.data.preview_image.url' @click='collapse = !collapse'/>
+      <img  class='single__media__image' 
+            :class='{active : collapse}' 
+            :src='main.single.data.preview_image.url' 
+            @click='collapse = !collapse'/>
     </div>
 
     <div class="single__desc">
       <div class="single__desc--l">
-        <p :style='{ color: dynamicColor }' class="single__desc__title" v-html="main.single.data.title[0].text"></p>
+        <p  :style='{ color: dynamicColor }' 
+            class="single__desc__title" 
+            v-html="main.single.data.title[0].text" ></p>
         <span>Year:</span>
-        <p class="single__desc__year" v-html="main.single.data.year[0].text"></p>
+        <p  class="single__desc__year" 
+            v-html="main.single.data.year[0].text"></p>
         <span>Materials:</span>
-        <ul class="single__desc--l__material" v-if='main.single.data.materials.length > 0'>
-          <li class="single__desc--l__material__item" v-for="material in main.single.data.materials" v-html="material.text"></li>
+        <ul class="single__desc--l__material" 
+            v-if='main.single.data.materials.length > 0'>
+          <li class="single__desc--l__material__item" 
+              v-for="(material, index) in main.single.data.materials" 
+              v-html="material.text"
+              :key='"material-" + index'></li>
         </ul><br/>
 
-        <div class="single__desc--l__events" v-if='main.single.data.events.length > 0' :style='{ color: dynamicColor }'>
-          <events :all='true' :project='main.single.data.title[0].text'/>
+        <div  class="single__desc--l__events" 
+              v-if='main.single.data.events.length > 0' 
+              :style='{ color: dynamicColor }'>
+          <events :all='true' 
+                  :project='main.single.data.title[0].text'/>
         </div>
       </div>
 
-      <div class="single__desc--r" v-if='main.single.data.description.length > 0'>
-        <p class="single__desc--r__text" v-html='renderHTML'></p>
+      <div  class="single__desc--r" 
+            v-if='main.single.data.description.length > 0'>
+        <p  class="single__desc--r__text" 
+            v-html='renderHTML'></p>
       </div>
     </div>
 
-    <div v-if='main.single.data.vimeo_id != undefined' class="single__video">
-      <div class='single__video__container'>
-        <iframe :src="'https://player.vimeo.com/video/' + main.single.data.vimeo_id + '?color=' + main.vimeoColor + '&title=0&byline=0&portrait=0'" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    <div  class="single__video"
+          v-if='main.single.data.vimeo_id != undefined'>
+      <div  class='single__video__container'>
+        <iframe :src="'https://player.vimeo.com/video/' + 
+                        main.single.data.vimeo_id + 
+                        '?color=' + main.vimeoColor + 
+                        '&title=0&byline=0&portrait=0'" 
+                        width="640" 
+                        height="360" 
+                        frameborder="0" 
+                        webkitallowfullscreen 
+                        mozallowfullscreen 
+                        allowfullscreen></iframe>
       </div>
     </div>
 
-    <imageSection v-if='main.single.data.images.length > 0' :images='main.single.data.images'/>
-    </div>
+    <imageSection v-if='main.single.data.images.length > 0' 
+                  :images='main.single.data.images'/>
 
   </div>
 </template>

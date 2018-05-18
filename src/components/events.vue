@@ -176,7 +176,7 @@ export default {
   &.popup {
     text-align: center;
     padding: $line-height-s / 2 $line-height * 1.5 $line-height-s / 2;
-    background: $theme-r; /* override with functoin */
+    background: $white;
     color: $white;
     width: 80%;
     float: left;

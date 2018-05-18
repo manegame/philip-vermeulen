@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <headbar :showTitle='showTitle'></headbar>
+    <headbar :showTitle='$route.name !== "pdf"'></headbar>
     <router-view></router-view>
   </div>
 </template>
@@ -21,10 +21,6 @@ export default {
       'main',
       'variables'
     ]),
-    showTitle() {
-      if (this.$route.name === 'pdf') return false
-      else return true
-    },
     ...mapGetters(['dynamicColor'])
   },
   head: {
@@ -49,9 +45,6 @@ export default {
     window.setInterval(() => {
       this.SET_COLOR()
     }, 100)
-  },
-  beforeRouteUpdate (to, from, next) {
-    console.log('to, from, next')
   },
   watch: {
     '$route' (to, from) {

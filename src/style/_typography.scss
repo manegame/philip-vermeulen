@@ -8,7 +8,7 @@ p {
 
 * {
   &::selection {
-    color: $theme-r;
+    color: $white;
     background: transparent;
     text-shadow: 0 0 2px $white;
   }
