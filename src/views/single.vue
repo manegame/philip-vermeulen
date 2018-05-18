@@ -27,7 +27,7 @@
 
     <div v-if='main.single.data.vimeo_id != undefined' class="single__video">
       <div class='single__video__container'>
-        <iframe :src="'https://player.vimeo.com/video/' + main.single.data.vimeo_id + '?color=C3D6c3&title=0&byline=0&portrait=0'" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <iframe :src="'https://player.vimeo.com/video/' + main.single.data.vimeo_id + '?color=' + main.vimeoColor + '&title=0&byline=0&portrait=0'" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
       </div>
     </div>
 
@@ -76,12 +76,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['SET_SINGLE']),
+    ...mapActions(['SET_SINGLE', 'GET_VIMEO_COLOR']),
     setSingleActionWrapper() {
       this.SET_SINGLE(this.main.projects.find(e => e.slugs[0] === this.$route.params.slug))
     }
   },
   mounted() {
+    this.GET_VIMEO_COLOR()
     this.setSingleActionWrapper()
     this.$emit('hideTitle')
   },

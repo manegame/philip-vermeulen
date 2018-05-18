@@ -1,23 +1,38 @@
 <template>
-  <div class="overview" :style='{ backgroundColor: variables.background }'>
-    <div class="overview__events">
-      <events v-if='variables.showDates' :close='true' @close='this.SHOW_DATES'></events>
+  <div  class="overview">
+    <div  class="overview__events">
+      <events   v-if='variables.showDates' 
+                :close='true' 
+                @close='this.SHOW_DATES' />
     </div>
-    <div class="overview__project" v-for="(project, index) in main.projects" @mouseover='SET_PROJECT({ slug: project.slugs[0], title: project.data.title[0].text })'>
-      <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-if="isEven((index + 1))">
-        <img class="overview__project__image" :src="project.data.preview_image.url"/>
-        <router-link class="overview__project__link" :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
+    <div  class="overview__project" 
+          v-for="(project, index) in main.projects" 
+          @mouseover='SET_PROJECT({ slug: project.slugs[0], title: project.data.title[0].text })'
+          :key='"project-" + index'>
+      <router-link  :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" 
+                    v-if="isEven((index + 1))" >
+        <img  class="overview__project__image" 
+              :src="project.data.preview_image.url" />
+        <router-link  class="overview__project__link" 
+                      :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }"
+                      :style='{color: dynamicColor}'
+                      v-html='project.data.title[0].text' />
       </router-link>
-      <router-link :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-else>
-        <img class="overview__project__image" :src="project.data.preview_image.url"/>
-        <router-link class="overview__project__link" :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" v-html='project.data.title[0].text'></router-link>
+      <router-link  :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" 
+                    v-else >
+        <img  class="overview__project__image" 
+              :src="project.data.preview_image.url" />
+        <router-link  class="overview__project__link" 
+                      :to="{ name: 'singleProject', params: {slug: project.slugs[0]} }" 
+                      :style='{color: dynamicColor}'
+                      v-html='project.data.title[0].text' />
       </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapActions, mapGetters} from 'vuex'
 import headbar from '../components/headbar'
 import events from '../components/events'
 import shop from '../components/shop'
@@ -36,7 +51,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main', 'variables'])
+    ...mapState(['main', 'variables']),
+    ...mapGetters(['dynamicColor'])
   },
   head: {
     title() {

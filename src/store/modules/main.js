@@ -1,4 +1,5 @@
 import api from '../../api/prismic'
+import convert from 'color-convert'
 import * as actionTypes from '../actionTypes'
 import * as mutationTypes from '../mutationTypes'
 
@@ -8,6 +9,7 @@ const state = {
     sat: 18,
     lit: 80
   },
+  vimeoColor: '',
   projects: [],
   single: {},
   about: [],
@@ -18,6 +20,9 @@ const state = {
 const actions = {
   [actionTypes.SET_COLOR]({commit, state}) {
     commit(mutationTypes.SET_COLOR)
+  },
+  [actionTypes.GET_VIMEO_COLOR]({commit, state}) {
+    commit(mutationTypes.SET_VIMEO_COLOR)
   },
   async [actionTypes.GET_POSTS]({commit, state}) {
     commit(mutationTypes.SET_POSTS, await api.getPosts())
@@ -37,6 +42,9 @@ const mutations = {
     } else {
       state.color.hue = 0
     }
+  },
+  [mutationTypes.SET_VIMEO_COLOR](state) {
+    state.vimeoColor = convert.hsl.hex(state.color.hue, state.color.sat, state.color.lit)
   },
   [mutationTypes.SET_POSTS](state, data) {
     state.projects = data.filter(e => e.type === 'project')

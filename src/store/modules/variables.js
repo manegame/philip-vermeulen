@@ -4,8 +4,8 @@ import * as mutationTypes from '../mutationTypes'
 const state = {
   showDates: true,
   project: {
-    title: 'Philip Vermeulen',
-    slug: ''
+    title: '',
+    slug: 'physical-rhythm-machine--boem-boem'
   }
 }
 

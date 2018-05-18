@@ -48,7 +48,7 @@ const router = new VueRouter({
       component: about
     },
     {
-      path: '/pdf',
+      path: '/bibliography',
       name: 'pdf',
       component: pdf
     }
