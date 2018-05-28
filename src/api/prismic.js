@@ -3,6 +3,17 @@ import Prismic from 'prismic-javascript'
 const apiEndpoint = 'https://philip-vermeulen.prismic.io/api/v2'
 
 export default {
+  getLibrary() {
+    return new Promise((resolve, reject) => {
+      Prismic.getApi(apiEndpoint)
+      .then(api => {
+        return api.getSingle('library')
+        .then((document) => {
+          resolve(document)
+        })
+      })
+    })
+  },
   getPosts() {
     return new Promise((resolve, reject) => {
       Prismic.getApi(apiEndpoint)

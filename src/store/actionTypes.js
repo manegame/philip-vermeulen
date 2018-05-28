@@ -1,4 +1,5 @@
 export const GET_POSTS = 'GET_POSTS'
+export const GET_LIBRARY = 'GET_LIBRARY'
 export const SET_SINGLE = 'SET_SINGLE'
 export const SET_BACKGROUND = 'SET_BACKGROUND'
 export const SET_COLOR = 'SET_COLOR'

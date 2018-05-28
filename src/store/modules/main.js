@@ -14,10 +14,14 @@ const state = {
   single: {},
   about: [],
   shop: [],
-  events: []
+  events: [],
+  library: {}
 }
 
 const actions = {
+  async [actionTypes.GET_LIBRARY]({commit, state}) {
+    commit(mutationTypes.SET_LIBRARY, await api.getLibrary())
+  },
   [actionTypes.SET_COLOR]({commit, state}) {
     commit(mutationTypes.SET_COLOR)
   },
@@ -50,6 +54,9 @@ const mutations = {
     state.projects = data.filter(e => e.type === 'project')
     state.about = data.filter(e => e.type === 'about')
     state.shop = data.filter(e => e.type === 'product')
+  },
+  [mutationTypes.SET_LIBRARY](state, data) {
+    state.library = data
   },
   [mutationTypes.SET_SINGLE](state, post) {
     state.single = post

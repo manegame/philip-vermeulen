@@ -1,26 +1,34 @@
 <template>
   <div  class='pdf'
         :style='{ backgroundColor: dynamicColor }'>
-    <a  href='http://philipvermeulen.com/pdf/Catalogus_RIJKS_PHI.pdf'
-        class='pdf__link'>
-      <img  class='pdf__link__image' 
-            src='../assets/img/1.jpg'/>
-    </a>
-    <a  href='http://philipvermeulen.com/pdf/PHI_brewingthesublime_digitaal.pdf'
-        class='pdf__link'>
-      <img  class='pdf__link__image'
-            src='../assets/img/2.jpg'/>
-    </a>
+    <template v-if='main.library.data.files.length > 0'
+              v-for='file in main.library.data.files'>
+      <a  class='pdf__link'
+          :href='file.file.url'
+          :key='file.file.size'>
+        <img  class='pdf__link__image'
+              v-if='file.cover.url'
+              :src='file.cover.url' />
+        <p v-else>{{file.file.name}}</p>
+      </a>
+    </template>
   </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapActions, mapGetters, mapState} from 'vuex'
 
 export default {
   name: 'pdf',
   computed: {
-    ...mapGetters(['dynamicColor'])
+    ...mapGetters(['dynamicColor']),
+    ...mapState(['main'])
+  },
+  methods: {
+    ...mapActions(['GET_LIBRARY'])
+  },
+  mounted() {
+    this.GET_LIBRARY()
   }
 }
 </script>

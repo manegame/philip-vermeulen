@@ -31,7 +31,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['GET_POSTS', 'SET_EVENTS', 'SET_COLOR']),
+    ...mapActions(['GET_POSTS', 'SET_EVENTS', 'SET_COLOR', 'GET_LIBRARY']),
     hideTitle () {
       if (this.$route.name === 'overview') { this.showTitle = true }
       if (this.$route.name === 'singleProject') { this.showTitle = false }
